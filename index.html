@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LotusLamp X Controller</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app">
+        <header>
+            <h1>LotusLamp X</h1>
+            <div id="connection-status" class="status disconnected">
+                <span class="status-dot"></span>
+                <span class="status-text">Disconnected</span>
+            </div>
+        </header>
+
+        <main>
+            <!-- Connection Section -->
+            <section class="card connection-card">
+                <button id="connect-btn" class="btn btn-primary btn-large">
+                    <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17.71 7.71L12 2h-1v7.59L6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 11 14.41V22h1l5.71-5.71-4.3-4.29 4.3-4.29zM13 5.83l1.88 1.88L13 9.59V5.83zm1.88 10.46L13 18.17v-3.76l1.88 1.88z"/>
+                    </svg>
+                    Connect via Bluetooth
+                </button>
+                <button id="disconnect-btn" class="btn btn-secondary" style="display: none;">Disconnect</button>
+            </section>
+
+            <!-- Power Control -->
+            <section class="card power-card" id="power-section" style="display: none;">
+                <div class="power-controls">
+                    <button id="power-on" class="btn btn-success">
+                        <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M13 3h-2v10h2V3zm4.83 2.17l-1.42 1.42C17.99 7.86 19 9.81 19 12c0 3.87-3.13 7-7 7s-7-3.13-7-7c0-2.19 1.01-4.14 2.58-5.42L6.17 5.17C4.23 6.82 3 9.26 3 12c0 4.97 4.03 9 9 9s9-4.03 9-9c0-2.74-1.23-5.18-3.17-6.83z"/>
+                        </svg>
+                        ON
+                    </button>
+                    <button id="power-off" class="btn btn-danger">
+                        <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M13 3h-2v10h2V3zm4.83 2.17l-1.42 1.42C17.99 7.86 19 9.81 19 12c0 3.87-3.13 7-7 7s-7-3.13-7-7c0-2.19 1.01-4.14 2.58-5.42L6.17 5.17C4.23 6.82 3 9.26 3 12c0 4.97 4.03 9 9 9s9-4.03 9-9c0-2.74-1.23-5.18-3.17-6.83z"/>
+                        </svg>
+                        OFF
+                    </button>
+                </div>
+            </section>
+
+            <!-- Color Picker Section -->
+            <section class="card color-card" id="color-section" style="display: none;">
+                <h2>Color</h2>
+                <div class="color-picker-container">
+                    <div class="color-wheel-wrapper">
+                        <canvas id="color-wheel" width="250" height="250"></canvas>
+                        <div id="color-cursor" class="color-cursor"></div>
+                    </div>
+                    <div class="color-preview-wrapper">
+                        <div id="color-preview" class="color-preview"></div>
+                        <input type="color" id="color-input" class="color-input">
+                    </div>
+                </div>
+                <div class="rgb-sliders">
+                    <div class="slider-group">
+                        <label>R</label>
+                        <input type="range" id="red-slider" min="0" max="255" value="255" class="slider red">
+                        <span id="red-value">255</span>
+                    </div>
+                    <div class="slider-group">
+                        <label>G</label>
+                        <input type="range" id="green-slider" min="0" max="255" value="0" class="slider green">
+                        <span id="green-value">0</span>
+                    </div>
+                    <div class="slider-group">
+                        <label>B</label>
+                        <input type="range" id="blue-slider" min="0" max="255" value="0" class="slider blue">
+                        <span id="blue-value">0</span>
+                    </div>
+                </div>
+                <button id="apply-color" class="btn btn-primary">Apply Color</button>
+            </section>
+
+            <!-- Brightness Section -->
+            <section class="card brightness-card" id="brightness-section" style="display: none;">
+                <h2>Brightness</h2>
+                <div class="brightness-control">
+                    <svg class="icon dim" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5z"/>
+                    </svg>
+                    <input type="range" id="brightness-slider" min="1" max="100" value="100" class="slider brightness">
+                    <svg class="icon bright" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5V0m0 24v-2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M0 12h2m20 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                        <circle cx="12" cy="12" r="5"/>
+                    </svg>
+                </div>
+                <span id="brightness-value">100%</span>
+            </section>
+
+            <!-- Preset Colors -->
+            <section class="card presets-card" id="presets-section" style="display: none;">
+                <h2>Quick Colors</h2>
+                <div class="preset-colors">
+                    <button class="preset-color" data-r="255" data-g="0" data-b="0" style="background: #ff0000;" title="Red"></button>
+                    <button class="preset-color" data-r="255" data-g="165" data-b="0" style="background: #ffa500;" title="Orange"></button>
+                    <button class="preset-color" data-r="255" data-g="255" data-b="0" style="background: #ffff00;" title="Yellow"></button>
+                    <button class="preset-color" data-r="0" data-g="255" data-b="0" style="background: #00ff00;" title="Green"></button>
+                    <button class="preset-color" data-r="0" data-g="255" data-b="255" style="background: #00ffff;" title="Cyan"></button>
+                    <button class="preset-color" data-r="0" data-g="0" data-b="255" style="background: #0000ff;" title="Blue"></button>
+                    <button class="preset-color" data-r="128" data-g="0" data-b="128" style="background: #800080;" title="Purple"></button>
+                    <button class="preset-color" data-r="255" data-g="0" data-b="255" style="background: #ff00ff;" title="Magenta"></button>
+                    <button class="preset-color" data-r="255" data-g="192" data-b="203" style="background: #ffc0cb;" title="Pink"></button>
+                    <button class="preset-color" data-r="255" data-g="255" data-b="255" style="background: #ffffff;" title="White"></button>
+                    <button class="preset-color" data-r="255" data-g="247" data-b="200" style="background: #fff7c8;" title="Warm White"></button>
+                    <button class="preset-color" data-r="200" data-g="220" data-b="255" style="background: #c8dcff;" title="Cool White"></button>
+                </div>
+            </section>
+
+            <!-- Built-in Device Effects Section -->
+            <section class="card effects-card" id="effects-section" style="display: none;">
+                <h2>Built-in Effects (Movement Patterns)</h2>
+                <p class="section-hint">These use the device's built-in modes - lights will physically move along the strip!</p>
+
+                <!-- Effect Colors - for software-animated patterns -->
+                <div class="effect-colors-section">
+                    <h3>Your Colors (for Software Patterns)</h3>
+                    <p class="section-hint">Pick colors - these work with the "Software Patterns" below</p>
+                    <div class="effect-color-row" id="effect-colors-row">
+                        <div class="effect-color-item">
+                            <input type="color" class="effect-color-input" value="#ff0000">
+                            <button class="remove-color-btn">&times;</button>
+                        </div>
+                        <div class="effect-color-item">
+                            <input type="color" class="effect-color-input" value="#00ff00">
+                            <button class="remove-color-btn">&times;</button>
+                        </div>
+                        <div class="effect-color-item">
+                            <input type="color" class="effect-color-input" value="#0000ff">
+                            <button class="remove-color-btn">&times;</button>
+                        </div>
+                        <button id="add-effect-color" class="btn btn-small btn-secondary">+</button>
+                    </div>
+                </div>
+
+                <!-- Software-animated patterns with custom colors -->
+                <div class="software-patterns">
+                    <h3>Software Patterns (Custom Colors)</h3>
+                    <p class="section-hint">These animate using YOUR colors above - sent rapidly to the device</p>
+                    <div class="software-patterns-grid">
+                        <button class="software-btn" data-pattern="cycle">
+                            <span class="pattern-icon">🔄</span>
+                            <span>Cycle</span>
+                        </button>
+                        <button class="software-btn" data-pattern="fade">
+                            <span class="pattern-icon">🌈</span>
+                            <span>Fade</span>
+                        </button>
+                        <button class="software-btn" data-pattern="pulse">
+                            <span class="pattern-icon">💓</span>
+                            <span>Pulse</span>
+                        </button>
+                        <button class="software-btn" data-pattern="strobe">
+                            <span class="pattern-icon">⚡</span>
+                            <span>Strobe</span>
+                        </button>
+                        <button class="software-btn" data-pattern="breathe">
+                            <span class="pattern-icon">🌬️</span>
+                            <span>Breathe</span>
+                        </button>
+                        <button class="software-btn" data-pattern="flash">
+                            <span class="pattern-icon">💥</span>
+                            <span>Flash</span>
+                        </button>
+                        <button class="software-btn" data-pattern="smooth">
+                            <span class="pattern-icon">🎨</span>
+                            <span>Smooth</span>
+                        </button>
+                        <button class="software-btn" data-pattern="random">
+                            <span class="pattern-icon">🎲</span>
+                            <span>Random</span>
+                        </button>
+                        <button class="software-btn" data-pattern="wave">
+                            <span class="pattern-icon">🌊</span>
+                            <span>Wave</span>
+                        </button>
+                        <button class="software-btn" data-pattern="bounce">
+                            <span class="pattern-icon">⬆️⬇️</span>
+                            <span>Bounce</span>
+                        </button>
+                        <button class="software-btn" data-pattern="comet">
+                            <span class="pattern-icon">☄️</span>
+                            <span>Comet</span>
+                        </button>
+                        <button class="software-btn" data-pattern="sparkle">
+                            <span class="pattern-icon">✨</span>
+                            <span>Sparkle</span>
+                        </button>
+                        <button class="software-btn" data-pattern="converge">
+                            <span class="pattern-icon">➡️⬅️</span>
+                            <span>Converge</span>
+                        </button>
+                    </div>
+                    <button id="stop-software-pattern" class="btn btn-danger btn-small" style="margin-top:10px;">Stop Software Pattern</button>
+                </div>
+
+                <!-- Speed Control -->
+                <div class="effect-speed">
+                    <label>Effect Speed</label>
+                    <input type="range" id="effect-speed" min="1" max="100" value="50" class="slider">
+                    <span id="speed-value">50%</span>
+                </div>
+
+                <!-- Known Effect Modes -->
+                <div class="builtin-effects">
+                    <h3>Built-in Device Effects (Fixed Colors)</h3>
+                    <p class="section-hint">These use the device's firmware - colors are preset and cannot be changed</p>
+                    <div class="builtin-grid" id="builtin-effects-grid">
+                        <!-- Row 1: Basic color jumps (documented modes) -->
+                        <button class="builtin-btn" data-mode="135" title="Mode 135">
+                            <span class="mode-num">135</span>
+                            <span>Jump RGB</span>
+                        </button>
+                        <button class="builtin-btn" data-mode="136" title="Mode 136">
+                            <span class="mode-num">136</span>
+                            <span>Jump RGBYCMW</span>
+                        </button>
+                        <button class="builtin-btn" data-mode="137" title="Mode 137">
+                            <span class="mode-num">137</span>
+                            <span>Crossfade R</span>
+                        </button>
+                        <button class="builtin-btn" data-mode="138" title="Mode 138">
+                            <span class="mode-num">138</span>
+                            <span>Crossfade G</span>
+                        </button>
+                        <button class="builtin-btn" data-mode="139" title="Mode 139">
+                            <span class="mode-num">139</span>
+                            <span>Crossfade B</span>
+                        </button>
+                        <button class="builtin-btn" data-mode="140" title="Mode 140">
+                            <span class="mode-num">140</span>
+                            <span>Crossfade Y</span>
+                        </button>
+                        <button class="builtin-btn" data-mode="141" title="Mode 141">
+                            <span class="mode-num">141</span>
+                            <span>Crossfade C</span>
+                        </button>
+                        <button class="builtin-btn" data-mode="142" title="Mode 142">
+                            <span class="mode-num">142</span>
+                            <span>Crossfade M</span>
+                        </button>
+                        <button class="builtin-btn" data-mode="143" title="Mode 143">
+                            <span class="mode-num">143</span>
+                            <span>Crossfade W</span>
+                        </button>
+                        <button class="builtin-btn" data-mode="144" title="Mode 144">
+                            <span class="mode-num">144</span>
+                            <span>Crossfade RGB</span>
+                        </button>
+                        <button class="builtin-btn" data-mode="145" title="Mode 145">
+                            <span class="mode-num">145</span>
+                            <span>Crossfade All</span>
+                        </button>
+                        <button class="builtin-btn" data-mode="146" title="Mode 146">
+                            <span class="mode-num">146</span>
+                            <span>Blink R</span>
+                        </button>
+                        <button class="builtin-btn" data-mode="147" title="Mode 147">
+                            <span class="mode-num">147</span>
+                            <span>Blink G</span>
+                        </button>
+                        <button class="builtin-btn" data-mode="148" title="Mode 148">
+                            <span class="mode-num">148</span>
+                            <span>Blink B</span>
+                        </button>
+                        <button class="builtin-btn" data-mode="149" title="Mode 149">
+                            <span class="mode-num">149</span>
+                            <span>Blink Y</span>
+                        </button>
+                        <button class="builtin-btn" data-mode="150" title="Mode 150">
+                            <span class="mode-num">150</span>
+                            <span>Blink C</span>
+                        </button>
+                        <button class="builtin-btn" data-mode="151" title="Mode 151">
+                            <span class="mode-num">151</span>
+                            <span>Blink M</span>
+                        </button>
+                        <button class="builtin-btn" data-mode="152" title="Mode 152">
+                            <span class="mode-num">152</span>
+                            <span>Blink W</span>
+                        </button>
+                        <button class="builtin-btn" data-mode="153" title="Mode 153">
+                            <span class="mode-num">153</span>
+                            <span>Blink RGB</span>
+                        </button>
+                        <button class="builtin-btn" data-mode="154" title="Mode 154">
+                            <span class="mode-num">154</span>
+                            <span>Blink All</span>
+                        </button>
+                        <button class="builtin-btn" data-mode="155" title="Mode 155">
+                            <span class="mode-num">155</span>
+                            <span>Effect 155</span>
+                        </button>
+                        <button class="builtin-btn" data-mode="156" title="Mode 156">
+                            <span class="mode-num">156</span>
+                            <span>Effect 156</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Extended Mode Explorer -->
+                <div class="mode-explorer">
+                    <h3>Discover More Modes</h3>
+                    <p class="section-hint">Try modes outside 135-156 - your device may have chase, meteor, flow effects!</p>
+                    <div class="mode-explorer-controls">
+                        <div class="mode-input-group">
+                            <label>Mode Number:</label>
+                            <input type="number" id="custom-mode" min="0" max="255" value="128">
+                            <button id="send-mode" class="btn btn-primary">Send</button>
+                        </div>
+                        <div class="mode-range-group">
+                            <label>Scan Range:</label>
+                            <input type="number" id="scan-start" min="0" max="255" value="100" placeholder="Start">
+                            <span>to</span>
+                            <input type="number" id="scan-end" min="0" max="255" value="180" placeholder="End">
+                            <button id="scan-modes" class="btn btn-secondary">Scan</button>
+                            <button id="stop-scan" class="btn btn-danger" style="display:none;">Stop</button>
+                        </div>
+                    </div>
+                    <div id="scan-status" class="scan-status"></div>
+
+                    <!-- Quick range buttons -->
+                    <div class="quick-ranges">
+                        <button class="range-btn" data-start="0" data-end="50">0-50</button>
+                        <button class="range-btn" data-start="50" data-end="100">50-100</button>
+                        <button class="range-btn" data-start="100" data-end="135">100-135</button>
+                        <button class="range-btn" data-start="156" data-end="200">156-200</button>
+                        <button class="range-btn" data-start="200" data-end="255">200-255</button>
+                    </div>
+                </div>
+
+                <!-- Favorites - modes that work well -->
+                <div class="favorite-modes" id="favorites-section">
+                    <h3>Your Favorites</h3>
+                    <p class="section-hint">Click the star on any mode to save it here</p>
+                    <div class="favorites-grid" id="favorites-grid">
+                        <p class="no-favorites">No favorites yet - discover modes and star them!</p>
+                    </div>
+                </div>
+
+                <!-- Stop Effect -->
+                <div class="effect-controls">
+                    <button id="stop-effect" class="btn btn-danger">Stop Effect (Set Solid Color)</button>
+                </div>
+            </section>
+
+            <!-- Custom Patterns Section -->
+            <section class="card patterns-card" id="patterns-section" style="display: none;">
+                <h2>Custom Patterns</h2>
+                <div class="pattern-creator">
+                    <div class="pattern-timeline" id="pattern-timeline">
+                        <div class="pattern-step" data-index="0">
+                            <div class="step-color" style="background: #ff0000;"></div>
+                            <input type="color" class="step-color-input" value="#ff0000">
+                            <input type="number" class="step-duration" value="500" min="100" max="5000" step="100">
+                            <span>ms</span>
+                            <button class="remove-step">&times;</button>
+                        </div>
+                    </div>
+                    <button id="add-step" class="btn btn-secondary">+ Add Color Step</button>
+                </div>
+                <div class="pattern-controls">
+                    <label>
+                        <input type="checkbox" id="pattern-loop"> Loop Pattern
+                    </label>
+                    <label>
+                        Transition:
+                        <select id="pattern-transition">
+                            <option value="instant">Instant</option>
+                            <option value="fade">Fade</option>
+                            <option value="smooth">Smooth</option>
+                            <option value="flash">Flash</option>
+                            <option value="pulse">Pulse</option>
+                        </select>
+                    </label>
+                    <label class="transition-duration-label">
+                        Duration:
+                        <input type="range" id="transition-duration" min="50" max="1000" value="200" class="slider slider-small">
+                        <span id="transition-duration-value">200ms</span>
+                    </label>
+                </div>
+                <div class="pattern-actions">
+                    <button id="play-pattern" class="btn btn-success">Play Pattern</button>
+                    <button id="stop-pattern" class="btn btn-danger">Stop</button>
+                    <button id="save-pattern" class="btn btn-secondary">Save Pattern</button>
+                </div>
+                <div class="saved-patterns" id="saved-patterns">
+                    <h3>Saved Patterns</h3>
+                    <div class="patterns-list" id="patterns-list"></div>
+                </div>
+            </section>
+
+            <!-- Debug Console -->
+            <section class="card debug-card" id="debug-section">
+                <h2>Debug Log</h2>
+                <div id="debug-log" class="debug-log"></div>
+                <button id="clear-log" class="btn btn-secondary btn-small">Clear</button>
+            </section>
+        </main>
+
+        <footer>
+            <p>Web Bluetooth Controller for LotusLamp X / ELK-BLEDOB devices</p>
+        </footer>
+    </div>
+
+    <script src="bluetooth.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
