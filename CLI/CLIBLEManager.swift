@@ -12,17 +12,26 @@ private enum ProcessLock {
         if let existing = try? String(contentsOf: url, encoding: .utf8).trimmingCharacters(in: .whitespacesAndNewlines),
            let oldPID = Int32(existing), oldPID != myPID {
             if kill(oldPID, 0) == 0 {
-                fputs("[lock] killing previous CLI instance (pid \(oldPID))...\n", stderr)
-                kill(oldPID, SIGTERM)
-                // Wait up to 2s for it to exit
+                // Grace period: wait up to 3s for it to finish naturally
+                fputs("[lock] waiting for previous CLI instance (pid \(oldPID)) to finish...\n", stderr)
                 var waited = 0
-                while kill(oldPID, 0) == 0 && waited < 20 {
+                while kill(oldPID, 0) == 0 && waited < 30 {
                     usleep(100_000) // 100ms
                     waited += 1
                 }
+                // If still alive after grace period, force kill
                 if kill(oldPID, 0) == 0 {
-                    fputs("[lock] SIGTERM timed out, sending SIGKILL to \(oldPID)\n", stderr)
-                    kill(oldPID, SIGKILL)
+                    fputs("[lock] grace period expired, killing pid \(oldPID)...\n", stderr)
+                    kill(oldPID, SIGTERM)
+                    waited = 0
+                    while kill(oldPID, 0) == 0 && waited < 20 {
+                        usleep(100_000)
+                        waited += 1
+                    }
+                    if kill(oldPID, 0) == 0 {
+                        fputs("[lock] SIGTERM timed out, sending SIGKILL to \(oldPID)\n", stderr)
+                        kill(oldPID, SIGKILL)
+                    }
                 }
             }
         }
@@ -81,6 +90,11 @@ final class CLIBLEManager: NSObject {
         self.command = command
         central = CBCentralManager(delegate: self, queue: .main)
         fputs("[BLE] CBCentralManager created\n", stderr)
+
+        signal(SIGTERM) { _ in
+            ProcessLock.release()
+            CFRunLoopStop(CFRunLoopGetMain())
+        }
 
         // 10-second timeout
         DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
