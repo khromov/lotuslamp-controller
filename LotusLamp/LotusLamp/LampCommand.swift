@@ -1,0 +1,36 @@
+import Foundation
+
+enum LampCommand {
+    /// Sent once after characteristic is found
+    static var initialize: Data {
+        Data([0x7E, 0x06, 0x83, 0x0F, 0x20, 0x0C, 0x06, 0x00, 0xEF])
+    }
+
+    static var powerOn: Data {
+        Data([0x7E, 0x07, 0x04, 0xFF, 0x00, 0x01, 0x02, 0x01, 0xEF])
+    }
+
+    static var powerOff: Data {
+        Data([0x7E, 0x07, 0x04, 0x00, 0x00, 0x00, 0x02, 0x01, 0xEF])
+    }
+
+    static func setColor(r: UInt8, g: UInt8, b: UInt8) -> Data {
+        Data([0x7E, 0x07, 0x05, 0x03, r, g, b, 0x10, 0xEF])
+    }
+
+    /// level: 1-100
+    static func setBrightness(_ level: Int) -> Data {
+        let clamped = UInt8(max(1, min(100, level)))
+        return Data([0x7E, 0x04, 0x01, clamped, 0x01, 0xFF, 0x02, 0x01, 0xEF])
+    }
+
+    static func setEffect(mode: UInt8) -> Data {
+        Data([0x7E, 0x07, 0x03, mode, 0x03, 0xFF, 0xFF, 0x00, 0xEF])
+    }
+
+    /// speed: 1-100
+    static func setEffectSpeed(_ speed: Int) -> Data {
+        let clamped = UInt8(max(1, min(100, speed)))
+        return Data([0x7E, 0x07, 0x02, clamped, 0xFF, 0xFF, 0xFF, 0x00, 0xEF])
+    }
+}

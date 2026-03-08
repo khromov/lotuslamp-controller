@@ -1,0 +1,330 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		22F2CDB6C4ED7F3C0512C73C /* LotusLampApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C64B2ACB425D2F4A359EA3F /* LotusLampApp.swift */; };
+		2724638BF75ADB7D4CFA8EA8 /* ControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2129EC194C4B58E26CBB8F00 /* ControlsView.swift */; };
+		2947780D5F6EC3933B08F470 /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEA963AD0419E7D6C80506F /* BLEManager.swift */; };
+		4865BD76B8F3DE835EE49A05 /* ConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3D992B9A18556C4E707202 /* ConnectionView.swift */; };
+		6A2AF4CF1D2ADA6AF34F1E2F /* EffectMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425AAE2F274C8D0BC5B8A6F3 /* EffectMode.swift */; };
+		7BF152479B3DF5A86CEB64BE /* BLEConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B03CAAA7C8651555E94DFD83 /* BLEConstants.swift */; };
+		802ED8A10C1E6D831455D1FF /* MainPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23986299D1A0EC364134C99D /* MainPopoverView.swift */; };
+		DDEDE08423C297D1A625D4A7 /* LampCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C188CA9218A7FC21732711 /* LampCommand.swift */; };
+		E1EBA8C93C8274FC57AB9A3B /* PresetColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96AA067912B11B1123EAA161 /* PresetColor.swift */; };
+		EF8CC7188CC23AEE638F3091 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDAB9CF744194939A375B08 /* AppDelegate.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		2129EC194C4B58E26CBB8F00 /* ControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlsView.swift; sourceTree = "<group>"; };
+		23986299D1A0EC364134C99D /* MainPopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPopoverView.swift; sourceTree = "<group>"; };
+		273FC3B5F77DFB69D82BF8D2 /* LotusLamp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LotusLamp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C64B2ACB425D2F4A359EA3F /* LotusLampApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LotusLampApp.swift; sourceTree = "<group>"; };
+		425AAE2F274C8D0BC5B8A6F3 /* EffectMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectMode.swift; sourceTree = "<group>"; };
+		47C188CA9218A7FC21732711 /* LampCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LampCommand.swift; sourceTree = "<group>"; };
+		8D3D992B9A18556C4E707202 /* ConnectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionView.swift; sourceTree = "<group>"; };
+		96AA067912B11B1123EAA161 /* PresetColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetColor.swift; sourceTree = "<group>"; };
+		B03CAAA7C8651555E94DFD83 /* BLEConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEConstants.swift; sourceTree = "<group>"; };
+		DFDAB9CF744194939A375B08 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		EBEA963AD0419E7D6C80506F /* BLEManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		0C5B765033D5BD2F548F91C5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				273FC3B5F77DFB69D82BF8D2 /* LotusLamp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A1EADE847823A16E4DDF9DB6 = {
+			isa = PBXGroup;
+			children = (
+				E9FF595B7682D6CA218F702C /* LotusLamp */,
+				0C5B765033D5BD2F548F91C5 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D5B865F45EC1F9010382FF6B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8D3D992B9A18556C4E707202 /* ConnectionView.swift */,
+				2129EC194C4B58E26CBB8F00 /* ControlsView.swift */,
+				23986299D1A0EC364134C99D /* MainPopoverView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		E9FF595B7682D6CA218F702C /* LotusLamp */ = {
+			isa = PBXGroup;
+			children = (
+				DFDAB9CF744194939A375B08 /* AppDelegate.swift */,
+				B03CAAA7C8651555E94DFD83 /* BLEConstants.swift */,
+				EBEA963AD0419E7D6C80506F /* BLEManager.swift */,
+				425AAE2F274C8D0BC5B8A6F3 /* EffectMode.swift */,
+				47C188CA9218A7FC21732711 /* LampCommand.swift */,
+				3C64B2ACB425D2F4A359EA3F /* LotusLampApp.swift */,
+				96AA067912B11B1123EAA161 /* PresetColor.swift */,
+				D5B865F45EC1F9010382FF6B /* Views */,
+			);
+			path = LotusLamp;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		840407E483B350A90C2D15F9 /* LotusLamp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B16280BE851598BC7E2C5554 /* Build configuration list for PBXNativeTarget "LotusLamp" */;
+			buildPhases = (
+				CAF48408708E688791EE97F9 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LotusLamp;
+			packageProductDependencies = (
+			);
+			productName = LotusLamp;
+			productReference = 273FC3B5F77DFB69D82BF8D2 /* LotusLamp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EBFBCB47E992C6BDB70F6703 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+				};
+			};
+			buildConfigurationList = 2953DE2B248C4C9B8570C53B /* Build configuration list for PBXProject "LotusLamp" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = A1EADE847823A16E4DDF9DB6;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 0C5B765033D5BD2F548F91C5 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				840407E483B350A90C2D15F9 /* LotusLamp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CAF48408708E688791EE97F9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EF8CC7188CC23AEE638F3091 /* AppDelegate.swift in Sources */,
+				7BF152479B3DF5A86CEB64BE /* BLEConstants.swift in Sources */,
+				2947780D5F6EC3933B08F470 /* BLEManager.swift in Sources */,
+				4865BD76B8F3DE835EE49A05 /* ConnectionView.swift in Sources */,
+				2724638BF75ADB7D4CFA8EA8 /* ControlsView.swift in Sources */,
+				6A2AF4CF1D2ADA6AF34F1E2F /* EffectMode.swift in Sources */,
+				DDEDE08423C297D1A625D4A7 /* LampCommand.swift in Sources */,
+				22F2CDB6C4ED7F3C0512C73C /* LotusLampApp.swift in Sources */,
+				802ED8A10C1E6D831455D1FF /* MainPopoverView.swift in Sources */,
+				E1EBA8C93C8274FC57AB9A3B /* PresetColor.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1DB793C3E2B1CCA9EAA7B27E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGNING_REQUIRED = NO;
+				CODE_SIGN_ENTITLEMENTS = LotusLamp/Resources/LotusLamp.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
+				INFOPLIST_FILE = LotusLamp/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.lotuslamp.controller;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		41CCFBD08ED3B51AEDF4C750 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGNING_REQUIRED = NO;
+				CODE_SIGN_ENTITLEMENTS = LotusLamp/Resources/LotusLamp.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
+				INFOPLIST_FILE = LotusLamp/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.lotuslamp.controller;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		5EFC5E4249C0DC8020785938 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Debug;
+		};
+		C5A505F854C08551C0685CAB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2953DE2B248C4C9B8570C53B /* Build configuration list for PBXProject "LotusLamp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5EFC5E4249C0DC8020785938 /* Debug */,
+				C5A505F854C08551C0685CAB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		B16280BE851598BC7E2C5554 /* Build configuration list for PBXNativeTarget "LotusLamp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				41CCFBD08ED3B51AEDF4C750 /* Debug */,
+				1DB793C3E2B1CCA9EAA7B27E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EBFBCB47E992C6BDB70F6703 /* Project object */;
+}
