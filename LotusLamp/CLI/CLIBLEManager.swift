@@ -75,12 +75,25 @@ final class CLIBLEManager: NSObject {
         commandSent = true
         CFRunLoopStop(CFRunLoopGetMain())
     }
+
+    /// Read the last peripheral UUID saved by the GUI app directly from its prefs plist.
+    private func readSavedUUID() -> String? {
+        let plistURL = FileManager.default.homeDirectoryForCurrentUser
+            .appendingPathComponent("Library/Preferences/com.lotuslamp.controller.plist")
+        guard let dict = NSDictionary(contentsOf: plistURL),
+              let uuidString = dict[BLEConstants.lastPeripheralUUIDKey] as? String else {
+            fputs("[BLE] no saved UUID in \(plistURL.path)\n", stderr)
+            return nil
+        }
+        return uuidString
+    }
 }
 
 // MARK: - CBCentralManagerDelegate
 
 extension CLIBLEManager: CBCentralManagerDelegate {
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
+        fputs("[BLE] state: \(central.state.rawValue)\n", stderr)
         guard central.state == .poweredOn else {
             fputs("Error: Bluetooth is not available (state: \(central.state.rawValue)).\n", stderr)
             CFRunLoopStop(CFRunLoopGetMain())
@@ -88,28 +101,26 @@ extension CLIBLEManager: CBCentralManagerDelegate {
         }
 
         if let name = deviceName {
-            // Scan for a named peripheral
+            fputs("[BLE] scanning for '\(name)'...\n", stderr)
             central.scanForPeripherals(withServices: nil, options: [
                 CBCentralManagerScanOptionAllowDuplicatesKey: false
             ])
-            _ = name // used in didDiscover
-        } else {
-            // Auto-connect via saved UUID from GUI app's UserDefaults domain
-            let defaults = UserDefaults(suiteName: "com.lotuslamp.controller")
-            if let uuidString = defaults?.string(forKey: BLEConstants.lastPeripheralUUIDKey),
-               let uuid = UUID(uuidString: uuidString) {
-                let known = central.retrievePeripherals(withIdentifiers: [uuid])
-                if let p = known.first {
-                    peripheral = p
-                    p.delegate = self
-                    central.connect(p, options: nil)
-                    return
-                }
+        } else if let savedUUID = readSavedUUID(), let uuid = UUID(uuidString: savedUUID) {
+            fputs("[BLE] trying saved UUID: \(savedUUID)\n", stderr)
+            let known = central.retrievePeripherals(withIdentifiers: [uuid])
+            fputs("[BLE] retrievePeripherals returned \(known.count) peripheral(s)\n", stderr)
+            if let p = known.first {
+                fputs("[BLE] connecting to '\(p.name ?? "unnamed")'...\n", stderr)
+                peripheral = p
+                p.delegate = self
+                central.connect(p, options: nil)
+            } else {
+                fputs("Error: saved device not found. Make sure the lamp is on and nearby.\n", stderr)
+                CFRunLoopStop(CFRunLoopGetMain())
             }
-            // No saved UUID — scan
-            central.scanForPeripherals(withServices: nil, options: [
-                CBCentralManagerScanOptionAllowDuplicatesKey: false
-            ])
+        } else {
+            fputs("Error: no saved device. Connect via the GUI app first, or use --device NAME.\n", stderr)
+            CFRunLoopStop(CFRunLoopGetMain())
         }
     }
 
@@ -121,24 +132,20 @@ extension CLIBLEManager: CBCentralManagerDelegate {
             ?? advertisementData[CBAdvertisementDataLocalNameKey] as? String
             ?? ""
 
-        let match: Bool
-        if let target = deviceName {
-            match = name.lowercased() == target.lowercased()
-        } else {
-            // No target name and we got here via scan — connect to first advertising device
-            // (shouldn't normally happen; saved UUID path handles auto-connect)
-            match = !name.isEmpty
-        }
-
+        guard let target = deviceName else { return }
+        let match = name.lowercased() == target.lowercased()
+        fputs("[BLE] discovered: '\(name)' match=\(match)\n", stderr)
         guard match else { return }
 
         central.stopScan()
         self.peripheral = peripheral
         peripheral.delegate = self
+        fputs("[BLE] connecting to '\(name)'...\n", stderr)
         central.connect(peripheral, options: nil)
     }
 
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
+        fputs("[BLE] connected to '\(peripheral.name ?? "unnamed")'\n", stderr)
         peripheral.discoverServices(nil)
     }
 
@@ -159,6 +166,7 @@ extension CLIBLEManager: CBPeripheralDelegate {
             CFRunLoopStop(CFRunLoopGetMain())
             return
         }
+        fputs("[BLE] discovered \(services.count) service(s)\n", stderr)
         for service in services {
             peripheral.discoverCharacteristics(nil, for: service)
         }
@@ -171,21 +179,26 @@ extension CLIBLEManager: CBPeripheralDelegate {
         let allDone = services.allSatisfy { $0.characteristics != nil }
         guard allDone else { return }
 
+        fputs("[BLE] all characteristics discovered\n", stderr)
+
         guard let (char, type) = selectCharacteristic(from: peripheral) else {
             fputs("Error: no writable characteristic found.\n", stderr)
             CFRunLoopStop(CFRunLoopGetMain())
             return
         }
 
+        fputs("[BLE] using characteristic: \(char.uuid), writeType: \(type.rawValue)\n", stderr)
         writeCharacteristic = char
         writeType = type
 
-        // Send init packet, then the actual command
+        fputs("[BLE] sending init packet...\n", stderr)
         sendCommand(LampCommand.initialize)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
             guard let self, let cmd = self.command else { return }
+            fputs("[BLE] sending command...\n", stderr)
             self.sendCommand(cmd)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                fputs("[BLE] done\n", stderr)
                 self.finish()
             }
         }
