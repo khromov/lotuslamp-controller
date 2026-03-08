@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		14714A1E78CFE9E8906E807A /* BLEConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F234F2786CBD52EF007C75 /* BLEConstants.swift */; };
 		26A6F9CB304794C260F94274 /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 1E049AC35C908C1EA01B33C6 /* ArgumentParser */; };
+		3CC379689DEAD8321698AA1A /* ClaudeHooksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D2252DBEB84C94B9BC7161 /* ClaudeHooksView.swift */; };
 		3DBD031F5590441770C2C674 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAA9A450334089EFF7C59F3 /* AppDelegate.swift */; };
 		42947ED1559DEDE44FCBAA7B /* EffectMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C8C8019BD4C918E29316A6 /* EffectMode.swift */; };
 		64B4A5FE44C1CBDD707D5517 /* CLIHelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B78D1FC76BEC340EF0B633 /* CLIHelpView.swift */; };
@@ -51,6 +52,7 @@
 		74C61619F0507E02386AC896 /* maclotus-cli */ = {isa = PBXFileReference; includeInIndex = 0; path = "maclotus-cli"; sourceTree = BUILT_PRODUCTS_DIR; };
 		794787DA75DC3445445D7E66 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		87B78D1FC76BEC340EF0B633 /* CLIHelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLIHelpView.swift; sourceTree = "<group>"; };
+		88D2252DBEB84C94B9BC7161 /* ClaudeHooksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeHooksView.swift; sourceTree = "<group>"; };
 		920E9CF93D840850D4F90362 /* MainPopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPopoverView.swift; sourceTree = "<group>"; };
 		D51212C9C25DC3F8C8872D24 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E3016917F569AA9946757A10 /* LampCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LampCommand.swift; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 		4648C072347D48C18449AB82 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				88D2252DBEB84C94B9BC7161 /* ClaudeHooksView.swift */,
 				87B78D1FC76BEC340EF0B633 /* CLIHelpView.swift */,
 				0C83CCD0FD0A4C80F3816723 /* ConnectionView.swift */,
 				EDA4DB832C93BF7ED93E8A6E /* ControlsView.swift */,
@@ -256,6 +259,7 @@
 				14714A1E78CFE9E8906E807A /* BLEConstants.swift in Sources */,
 				CE633EE246D8C87B07305BD2 /* BLEManager.swift in Sources */,
 				64B4A5FE44C1CBDD707D5517 /* CLIHelpView.swift in Sources */,
+				3CC379689DEAD8321698AA1A /* ClaudeHooksView.swift in Sources */,
 				958F834A34B41620A4E63726 /* ConnectionView.swift in Sources */,
 				7CAF53DC9C4A5F227D8FEDC7 /* ControlsView.swift in Sources */,
 				BD16B530F327B31DB3CB165B /* EffectMode.swift in Sources */,

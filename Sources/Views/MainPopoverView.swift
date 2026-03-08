@@ -6,6 +6,7 @@ struct MainPopoverView: View {
 
     @State private var launchAtLogin = SMAppService.mainApp.status == .enabled
     @State private var showCLIHelp = false
+    @State private var showClaudeHooks = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -67,6 +68,13 @@ struct MainPopoverView: View {
                 .font(.caption)
                 .foregroundStyle(.secondary)
 
+                Button("Hooks") {
+                    showClaudeHooks = true
+                }
+                .buttonStyle(.plain)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+
                 Button("Quit") {
                     NSApplication.shared.terminate(nil)
                 }
@@ -81,8 +89,12 @@ struct MainPopoverView: View {
         .sheet(isPresented: $showCLIHelp) {
             CLIHelpView(isPresented: $showCLIHelp)
         }
+        .sheet(isPresented: $showClaudeHooks) {
+            ClaudeHooksView(isPresented: $showClaudeHooks)
+        }
         .onReceive(NotificationCenter.default.publisher(for: Notification.Name("PopoverDidClose"))) { _ in
             showCLIHelp = false
+            showClaudeHooks = false
         }
     }
 }
