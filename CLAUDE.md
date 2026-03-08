@@ -56,6 +56,22 @@ All commands are 9-byte packets: `7E [payload bytes] EF`
 
 Characteristic selection mirrors `bluetooth.js`: prefer writable chars whose UUID contains `fff` or `ffe`; skip standard BLE services (1800/1801).
 
+## App Icon
+
+Icons live in `Sources/Assets.xcassets/AppIcon.appiconset/`. To regenerate from `logo.png` after it changes:
+
+```bash
+# Crop to square (adjust height/cropOffset to match logo dimensions)
+sips --cropToHeightWidth <H> <H> --cropOffset 0 <X_OFFSET> logo.png --out /tmp/logo_square.png
+
+# Generate all required sizes
+for size in 16 32 64 128 256 512 1024; do
+  sips -z $size $size /tmp/logo_square.png --out Sources/Assets.xcassets/AppIcon.appiconset/icon_${size}.png
+done
+```
+
+`X_OFFSET` = `(width - height) / 2` to center-crop. Check dimensions first with `sips -g pixelWidth -g pixelHeight logo.png`.
+
 ## Key Notes
 
 - Swift `switch` on `Int` ranges with negative values doesn't compile — use `if`/`else` chains instead
