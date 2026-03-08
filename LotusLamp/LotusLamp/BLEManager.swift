@@ -286,9 +286,10 @@ extension BLEManager: CBPeripheralDelegate {
             writeType = type
             connectionStatus = .connected
 
-            // Save peripheral UUID for auto-reconnect
-            UserDefaults.standard.set(peripheral.identifier.uuidString,
-                                      forKey: BLEConstants.lastPeripheralUUIDKey)
+            // Save peripheral UUID for auto-reconnect (UserDefaults for GUI, file for CLI)
+            let uuidString = peripheral.identifier.uuidString
+            UserDefaults.standard.set(uuidString, forKey: BLEConstants.lastPeripheralUUIDKey)
+            try? uuidString.write(to: BLEConstants.deviceUUIDFileURL, atomically: true, encoding: .utf8)
 
             // Send initialization command
             sendCommand(LampCommand.initialize)

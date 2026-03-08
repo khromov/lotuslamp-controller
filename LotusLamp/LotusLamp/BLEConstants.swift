@@ -28,4 +28,8 @@ enum BLEConstants {
     static let preferredUUIDSubstrings = ["fff", "ffe"]
 
     static let lastPeripheralUUIDKey = "lastPeripheralUUID"
+
+    /// Shared file written by the GUI app so the CLI tool can find the last device.
+    static let deviceUUIDFileURL: URL = FileManager.default.homeDirectoryForCurrentUser
+        .appendingPathComponent(".lotuslamp_device")
 }

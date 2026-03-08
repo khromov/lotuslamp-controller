@@ -76,13 +76,12 @@ final class CLIBLEManager: NSObject {
         CFRunLoopStop(CFRunLoopGetMain())
     }
 
-    /// Read the last peripheral UUID saved by the GUI app directly from its prefs plist.
+    /// Read the last peripheral UUID saved by the GUI app to the shared file.
     private func readSavedUUID() -> String? {
-        let plistURL = FileManager.default.homeDirectoryForCurrentUser
-            .appendingPathComponent("Library/Preferences/com.lotuslamp.controller.plist")
-        guard let dict = NSDictionary(contentsOf: plistURL),
-              let uuidString = dict[BLEConstants.lastPeripheralUUIDKey] as? String else {
-            fputs("[BLE] no saved UUID in \(plistURL.path)\n", stderr)
+        let url = BLEConstants.deviceUUIDFileURL
+        guard let uuidString = try? String(contentsOf: url, encoding: .utf8).trimmingCharacters(in: .whitespacesAndNewlines),
+              !uuidString.isEmpty else {
+            fputs("[BLE] no saved UUID in \(url.path)\n", stderr)
             return nil
         }
         return uuidString
