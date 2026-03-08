@@ -19,8 +19,10 @@ final class CLIBLEManager: NSObject {
 
     /// Connect to the lamp, send the command, and block until done (or timeout).
     func execute(command: Data) {
+        fputs("[BLE] execute() called\n", stderr)
         self.command = command
         central = CBCentralManager(delegate: self, queue: .main)
+        fputs("[BLE] CBCentralManager created\n", stderr)
 
         // 10-second timeout
         DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
@@ -76,12 +78,13 @@ final class CLIBLEManager: NSObject {
         CFRunLoopStop(CFRunLoopGetMain())
     }
 
-    /// Read the last peripheral UUID saved by the GUI app to the shared file.
+    /// Read the last peripheral UUID from the shared file written by the GUI app.
     private func readSavedUUID() -> String? {
         let url = BLEConstants.deviceUUIDFileURL
-        guard let uuidString = try? String(contentsOf: url, encoding: .utf8).trimmingCharacters(in: .whitespacesAndNewlines),
+        guard let uuidString = try? String(contentsOf: url, encoding: .utf8)
+                .trimmingCharacters(in: .whitespacesAndNewlines),
               !uuidString.isEmpty else {
-            fputs("[BLE] no saved UUID in \(url.path)\n", stderr)
+            fputs("[BLE] no saved UUID at \(url.path)\n", stderr)
             return nil
         }
         return uuidString
