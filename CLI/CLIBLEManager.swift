@@ -61,6 +61,14 @@ final class CLIBLEManager: NSObject {
     private var breatheTimer: Timer?
     private var breatheStartTime: Date?
 
+    // Sequence mode state
+    private var sequenceMode = false
+    private var sequenceCommands: [Data] = []
+    private var sequenceInterval: Double = 3.0
+    private var sequenceOnSend: ((Int) -> Void)?
+    private var sequenceTimer: Timer?
+    private var sequenceIndex = 0
+
     init(deviceName: String?) {
         self.deviceName = deviceName
         super.init()
@@ -84,6 +92,37 @@ final class CLIBLEManager: NSObject {
         }
 
         CFRunLoopRun()
+    }
+
+    /// Connect once and send each command in `commands` spaced `interval` seconds apart.
+    /// `onSend` is called with the 0-based index just before each command is sent.
+    /// Runs until all commands are sent or Ctrl+C.
+    func executeSequence(commands: [Data], interval: Double, onSend: ((Int) -> Void)? = nil) {
+        guard !commands.isEmpty else { return }
+        ProcessLock.acquire()
+        fputs("[BLE] executeSequence() called (\(commands.count) commands, interval \(interval)s)\n", stderr)
+        sequenceMode = true
+        sequenceCommands = commands
+        sequenceInterval = interval
+        sequenceOnSend = onSend
+        central = CBCentralManager(delegate: self, queue: .main)
+
+        signal(SIGINT) { _ in
+            fputs("\n[BLE] interrupted, stopping sequence\n", stderr)
+            ProcessLock.release()
+            CFRunLoopStop(CFRunLoopGetMain())
+        }
+        signal(SIGTERM) { _ in
+            fputs("\n[BLE] terminated, stopping sequence\n", stderr)
+            ProcessLock.release()
+            CFRunLoopStop(CFRunLoopGetMain())
+        }
+
+        fputs("Sequence running (Ctrl+C to stop)...\n", stderr)
+        CFRunLoopRun()
+
+        sequenceTimer?.invalidate()
+        ProcessLock.release()
     }
 
     /// Connect to the lamp and run a breathe animation until Ctrl+C.
@@ -276,7 +315,41 @@ extension CLIBLEManager: CBPeripheralDelegate {
         fputs("[BLE] sending init packet...\n", stderr)
         sendCommand(LampCommand.initialize)
 
-        if breatheMode {
+        if sequenceMode {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
+                guard let self else { return }
+                // Send first command immediately
+                self.sequenceOnSend?(self.sequenceIndex)
+                fputs("[sequence] sending command \(self.sequenceIndex + 1)/\(self.sequenceCommands.count)\n", stderr)
+                self.sendCommand(self.sequenceCommands[self.sequenceIndex])
+                self.sequenceIndex += 1
+
+                if self.sequenceIndex >= self.sequenceCommands.count {
+                    // Only one command — stop after a short delay
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        ProcessLock.release()
+                        CFRunLoopStop(CFRunLoopGetMain())
+                    }
+                    return
+                }
+
+                self.sequenceTimer = Timer.scheduledTimer(withTimeInterval: self.sequenceInterval, repeats: true) { [weak self] _ in
+                    guard let self else { return }
+                    self.sequenceOnSend?(self.sequenceIndex)
+                    fputs("[sequence] sending command \(self.sequenceIndex + 1)/\(self.sequenceCommands.count)\n", stderr)
+                    self.sendCommand(self.sequenceCommands[self.sequenceIndex])
+                    self.sequenceIndex += 1
+
+                    if self.sequenceIndex >= self.sequenceCommands.count {
+                        self.sequenceTimer?.invalidate()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            ProcessLock.release()
+                            CFRunLoopStop(CFRunLoopGetMain())
+                        }
+                    }
+                }
+            }
+        } else if breatheMode {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
                 guard let self else { return }
                 if let colorCmd = self.breatheColor {

@@ -63,3 +63,7 @@ Then build:
 ./scripts/build-release.sh              # full build + notarize
 ./scripts/build-release.sh --skip-notarize  # skip notarization (quick test)
 ```
+
+## Misc notes
+
+Effect 142 = pulsating yellow
