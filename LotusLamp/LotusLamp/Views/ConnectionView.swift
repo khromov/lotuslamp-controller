@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ConnectionView: View {
     @EnvironmentObject var ble: BLEManager
+    @State private var showOtherDevices = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -87,30 +88,70 @@ struct ConnectionView: View {
         }
     }
 
+    private var elkDevices: [DiscoveredPeripheral] {
+        ble.discoveredPeripherals
+            .filter { $0.name.uppercased().hasPrefix("ELK") }
+            .sorted { $0.rssi > $1.rssi }
+    }
+
+    private var otherDevices: [DiscoveredPeripheral] {
+        ble.discoveredPeripherals
+            .filter { !$0.name.uppercased().hasPrefix("ELK") }
+            .sorted { $0.rssi > $1.rssi }
+    }
+
     private var peripheralList: some View {
-        VStack(spacing: 4) {
-            ForEach(ble.discoveredPeripherals.sorted(by: { $0.rssi > $1.rssi })) { device in
-                Button(action: { ble.connect(to: device) }) {
+        ScrollView {
+            VStack(spacing: 4) {
+                if !elkDevices.isEmpty {
                     HStack {
-                        Image(systemName: "wave.3.right")
-                            .foregroundStyle(rssiColor(device.rssi))
-                            .frame(width: 20)
-                        Text(device.name)
-                            .font(.subheadline)
-                        Spacer()
-                        Text("\(device.rssi) dBm")
-                            .font(.caption2)
+                        Text("Lamps")
+                            .font(.caption)
                             .foregroundStyle(.secondary)
+                            .textCase(.uppercase)
+                        Spacer()
                     }
-                    .padding(.vertical, 4)
-                    .padding(.horizontal, 8)
-                    .background(Color(nsColor: .controlBackgroundColor))
-                    .cornerRadius(6)
+                    ForEach(elkDevices) { device in
+                        peripheralRow(device)
+                    }
                 }
-                .buttonStyle(.plain)
+
+                if !otherDevices.isEmpty {
+                    DisclosureGroup(isExpanded: $showOtherDevices) {
+                        ForEach(otherDevices) { device in
+                            peripheralRow(device)
+                        }
+                    } label: {
+                        Text("Other Devices")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            .textCase(.uppercase)
+                    }
+                }
             }
         }
         .frame(maxHeight: 150)
+    }
+
+    private func peripheralRow(_ device: DiscoveredPeripheral) -> some View {
+        Button(action: { ble.connect(to: device) }) {
+            HStack {
+                Image(systemName: "wave.3.right")
+                    .foregroundStyle(rssiColor(device.rssi))
+                    .frame(width: 20)
+                Text(device.name)
+                    .font(.subheadline)
+                Spacer()
+                Text("\(device.rssi) dBm")
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+            }
+            .padding(.vertical, 4)
+            .padding(.horizontal, 8)
+            .background(Color(nsColor: .controlBackgroundColor))
+            .cornerRadius(6)
+        }
+        .buttonStyle(.plain)
     }
 
     private func rssiColor(_ rssi: Int) -> Color {
