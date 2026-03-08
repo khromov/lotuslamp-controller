@@ -6,13 +6,19 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ```bash
 # Regenerate Xcode project from project.yml (required after adding/removing files)
-cd LotusLamp && xcodegen generate
+xcodegen generate
 
-# Build the macOS status bar app
+# Build the macOS status bar app (Debug — unsigned)
 xcodebuild -project LotusLamp.xcodeproj -scheme LotusLamp -configuration Debug build
 
-# Build the CLI tool
+# Build the CLI tool (Debug — unsigned)
 xcodebuild -project LotusLamp.xcodeproj -scheme lotuslamp-cli -configuration Debug build
+
+# Release build: signed + notarized DMG (requires Developer ID cert + stored notarytool credentials)
+./scripts/build-release.sh
+
+# Release build without notarization (quick test)
+./scripts/build-release.sh --skip-notarize
 ```
 
 No test targets exist in this project.
@@ -56,4 +62,5 @@ Characteristic selection mirrors `bluetooth.js`: prefer writable chars whose UUI
 - Lamp state is tracked locally only (`@Published` vars in `BLEManager`); the device does not send state back
 - Color and brightness sends are debounced 100ms via `DispatchWorkItem` to avoid flooding BLE
 - Auto-reconnect on launch: last peripheral UUID is persisted in `UserDefaults` under `BLEConstants.lastPeripheralUUIDKey`
-- Code signing is disabled (`CODE_SIGN_IDENTITY: "-"`, `CODE_SIGNING_REQUIRED: NO`) — no entitlement issues
+- Debug builds are unsigned (`CODE_SIGN_IDENTITY: "-"`, `CODE_SIGNING_REQUIRED: NO`); Release builds use Developer ID + hardened runtime (Team ID: 36S2252ZTN)
+- CLI binary is embedded in `Contents/Resources/lotuslamp` via a post-compile script in the LotusLamp target

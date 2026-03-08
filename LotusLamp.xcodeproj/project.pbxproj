@@ -12,6 +12,7 @@
 		190733352E45170EDEF6B529 /* ControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C53B3D92C6CB6074639A51D9 /* ControlsView.swift */; };
 		256ABEDF9B7D2AC6DF2B1C02 /* LampCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41BD14F933F31D0F852B4DF /* LampCommand.swift */; };
 		35131E31BDE0F8DE2C56BA61 /* BLEConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E639CE634F67584D7DB9C4 /* BLEConstants.swift */; };
+		42A1F770778C322405B82481 /* lotuslamp-cli in Resources */ = {isa = PBXBuildFile; fileRef = C705130D7DD2619132441008 /* lotuslamp-cli */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		470A631A8EEBA018DC3468A0 /* EffectMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FF108498428CCC03CC1CED /* EffectMode.swift */; };
 		70201FA712CF6412B9241445 /* LampCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41BD14F933F31D0F852B4DF /* LampCommand.swift */; };
 		767750D144C5272A79FC98D0 /* BLEConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E639CE634F67584D7DB9C4 /* BLEConstants.swift */; };
@@ -26,6 +27,16 @@
 		DD5291BCEA519926B1F15FB8 /* CLIHelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66E92560168D717D43BF5DC /* CLIHelpView.swift */; };
 		F306B59E14FE732BF8DBD0A0 /* PresetColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E04ED198F59FE4AC5631BA /* PresetColor.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6F160CC43499BAC007488ECD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EBFBCB47E992C6BDB70F6703 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 31F50008DC2DC45F99319802;
+			remoteInfo = "lotuslamp-cli";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		177D900B5A42A0847204FF07 /* LotusLampApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LotusLampApp.swift; sourceTree = "<group>"; };
@@ -137,10 +148,13 @@
 			buildConfigurationList = B16280BE851598BC7E2C5554 /* Build configuration list for PBXNativeTarget "LotusLamp" */;
 			buildPhases = (
 				CAF48408708E688791EE97F9 /* Sources */,
+				3CC1EB9EA1354AC568556196 /* Embed CLI Binary */,
+				8B3D7A627EE8EC44521EC673 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				6F06E4F53857C4D57F418A3D /* PBXTargetDependency */,
 			);
 			name = LotusLamp;
 			packageProductDependencies = (
@@ -183,6 +197,39 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		8B3D7A627EE8EC44521EC673 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				42A1F770778C322405B82481 /* lotuslamp-cli in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3CC1EB9EA1354AC568556196 /* Embed CLI Binary */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Embed CLI Binary";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cp \"${BUILT_PRODUCTS_DIR}/lotuslamp\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/Resources/lotuslamp\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		2A7399847D4C0D8DCCEDE059 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -217,16 +264,25 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		6F06E4F53857C4D57F418A3D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 31F50008DC2DC45F99319802 /* lotuslamp-cli */;
+			targetProxy = 6F160CC43499BAC007488ECD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
 		1DB793C3E2B1CCA9EAA7B27E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGNING_REQUIRED = NO;
+				CODE_SIGNING_REQUIRED = YES;
 				CODE_SIGN_ENTITLEMENTS = Sources/Resources/LotusLamp.entitlements;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
-				ENABLE_HARDENED_RUNTIME = NO;
+				DEVELOPMENT_TEAM = 36S2252ZTN;
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Sources/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -245,6 +301,7 @@
 				CODE_SIGN_ENTITLEMENTS = Sources/Resources/LotusLamp.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				INFOPLIST_FILE = Sources/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -322,10 +379,11 @@
 		75B92DBD6DA3BF8F1C9D0C7F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGNING_REQUIRED = NO;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGNING_REQUIRED = YES;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COMBINE_HIDPI_IMAGES = YES;
-				ENABLE_HARDENED_RUNTIME = NO;
+				DEVELOPMENT_TEAM = 36S2252ZTN;
+				ENABLE_HARDENED_RUNTIME = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -342,6 +400,7 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -386,8 +445,9 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
+				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEPLOYMENT_POSTPROCESSING = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -403,6 +463,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				STRIP_INSTALLED_PRODUCT = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.9;

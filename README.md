@@ -21,12 +21,21 @@ lotuslamp colors        # list all preset names
 lotuslamp --device "My Lamp" on   # target by name
 ```
 
+## Installation
+
+Download `LotusLamp.dmg` from [Releases](../../releases), open it, and drag LotusLamp to Applications.
+
+To use the CLI after installation:
+
+```bash
+ln -sf /Applications/LotusLamp.app/Contents/Resources/lotuslamp /usr/local/bin/lotuslamp
+```
+
 ## Building
 
 Requires Xcode 15+ and [XcodeGen](https://github.com/yonaskolb/XcodeGen).
 
 ```bash
-cd LotusLamp
 xcodegen generate
 xcodebuild -project LotusLamp.xcodeproj -scheme LotusLamp -configuration Debug build
 ```
@@ -35,4 +44,22 @@ To build just the CLI:
 
 ```bash
 xcodebuild -project LotusLamp.xcodeproj -scheme lotuslamp-cli -configuration Debug build
+```
+
+### Release build (signed + notarized DMG)
+
+Set up notarization credentials once:
+
+```bash
+xcrun notarytool store-credentials "LotusLamp" \
+  --apple-id "your@email.com" \
+  --team-id "36S2252ZTN" \
+  --password "app-specific-password"
+```
+
+Then build:
+
+```bash
+./scripts/build-release.sh              # full build + notarize
+./scripts/build-release.sh --skip-notarize  # skip notarization (quick test)
 ```
