@@ -1,6 +1,48 @@
 import CoreBluetooth
 import Foundation
 
+// MARK: - ProcessLock
+
+private enum ProcessLock {
+    /// Acquire the PID file lock, killing any previous holder.
+    static func acquire() {
+        let url = BLEConstants.pidFileURL
+        let myPID = ProcessInfo.processInfo.processIdentifier
+
+        if let existing = try? String(contentsOf: url, encoding: .utf8).trimmingCharacters(in: .whitespacesAndNewlines),
+           let oldPID = Int32(existing), oldPID != myPID {
+            if kill(oldPID, 0) == 0 {
+                fputs("[lock] killing previous CLI instance (pid \(oldPID))...\n", stderr)
+                kill(oldPID, SIGTERM)
+                // Wait up to 2s for it to exit
+                var waited = 0
+                while kill(oldPID, 0) == 0 && waited < 20 {
+                    usleep(100_000) // 100ms
+                    waited += 1
+                }
+                if kill(oldPID, 0) == 0 {
+                    fputs("[lock] SIGTERM timed out, sending SIGKILL to \(oldPID)\n", stderr)
+                    kill(oldPID, SIGKILL)
+                }
+            }
+        }
+
+        try? "\(myPID)".write(to: url, atomically: true, encoding: .utf8)
+    }
+
+    /// Release the lock if we still own it.
+    static func release() {
+        let url = BLEConstants.pidFileURL
+        let myPID = ProcessInfo.processInfo.processIdentifier
+        if let stored = try? String(contentsOf: url, encoding: .utf8).trimmingCharacters(in: .whitespacesAndNewlines),
+           stored == "\(myPID)" {
+            try? FileManager.default.removeItem(at: url)
+        }
+    }
+}
+
+// MARK: - CLIBLEManager
+
 /// Synchronous BLE manager for CLI use. Connects, sends a command, then exits.
 final class CLIBLEManager: NSObject {
     private let deviceName: String?
@@ -26,6 +68,7 @@ final class CLIBLEManager: NSObject {
 
     /// Connect to the lamp, send the command, and block until done (or timeout).
     func execute(command: Data) {
+        ProcessLock.acquire()
         fputs("[BLE] execute() called\n", stderr)
         self.command = command
         central = CBCentralManager(delegate: self, queue: .main)
@@ -35,6 +78,7 @@ final class CLIBLEManager: NSObject {
         DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
             if !self.commandSent {
                 fputs("Error: timed out waiting for lamp connection.\n", stderr)
+                ProcessLock.release()
                 CFRunLoopStop(CFRunLoopGetMain())
             }
         }
@@ -44,15 +88,22 @@ final class CLIBLEManager: NSObject {
 
     /// Connect to the lamp and run a breathe animation until Ctrl+C.
     func executeBreathe(color: Data?, cycleDuration: Double) {
+        ProcessLock.acquire()
         fputs("[BLE] executeBreathe() called\n", stderr)
         breatheMode = true
         breatheColor = color
         breatheCycleDuration = cycleDuration
         central = CBCentralManager(delegate: self, queue: .main)
 
-        // Install SIGINT handler to stop on Ctrl+C
+        // Install SIGINT and SIGTERM handlers to stop cleanly
         signal(SIGINT) { _ in
             fputs("\n[BLE] interrupted, stopping breathe\n", stderr)
+            ProcessLock.release()
+            CFRunLoopStop(CFRunLoopGetMain())
+        }
+        signal(SIGTERM) { _ in
+            fputs("\n[BLE] terminated, stopping breathe\n", stderr)
+            ProcessLock.release()
             CFRunLoopStop(CFRunLoopGetMain())
         }
 
@@ -60,6 +111,7 @@ final class CLIBLEManager: NSObject {
         CFRunLoopRun()
 
         breatheTimer?.invalidate()
+        ProcessLock.release()
     }
 
     // MARK: - Characteristic selection (mirrors BLEManager.swift)
@@ -102,6 +154,7 @@ final class CLIBLEManager: NSObject {
 
     private func finish() {
         commandSent = true
+        ProcessLock.release()
         CFRunLoopStop(CFRunLoopGetMain())
     }
 
