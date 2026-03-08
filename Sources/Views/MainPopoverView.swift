@@ -13,7 +13,7 @@ struct MainPopoverView: View {
             HStack {
                 Image(systemName: "lightbulb.fill")
                     .foregroundStyle(.yellow)
-                Text("LotusLamp")
+                Text("MacLotus")
                     .font(.title3.bold())
                 Spacer()
             }

@@ -10,8 +10,8 @@ xcodegen generate
 
 echo "==> Building CLI (Debug)"
 xcodebuild \
-  -project LotusLamp.xcodeproj \
-  -scheme lotuslamp-cli \
+  -project MacLotus.xcodeproj \
+  -scheme maclotus-cli \
   -configuration Debug \
   -derivedDataPath "$BUILD_DIR/DerivedData" \
   SYMROOT="$BUILD_DIR/Products" \
@@ -19,8 +19,8 @@ xcodebuild \
 
 echo "==> Building App (Debug)"
 xcodebuild \
-  -project LotusLamp.xcodeproj \
-  -scheme LotusLamp \
+  -project MacLotus.xcodeproj \
+  -scheme MacLotus \
   -configuration Debug \
   -derivedDataPath "$BUILD_DIR/DerivedData" \
   SYMROOT="$BUILD_DIR/Products" \
@@ -28,8 +28,8 @@ xcodebuild \
 
 OUTPUT_DIR="$BUILD_DIR/Products/Debug"
 
-if [[ ! -d "$OUTPUT_DIR/LotusLamp.app" ]]; then
-  echo "ERROR: App not found at $OUTPUT_DIR/LotusLamp.app"
+if [[ ! -d "$OUTPUT_DIR/MacLotus.app" ]]; then
+  echo "ERROR: App not found at $OUTPUT_DIR/MacLotus.app"
   exit 1
 fi
 

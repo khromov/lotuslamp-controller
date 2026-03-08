@@ -3,7 +3,7 @@ import SwiftUI
 struct CLIHelpView: View {
     @Binding var isPresented: Bool
 
-    private let cliPath = Bundle.main.bundlePath + "/Contents/Resources/lotuslamp"
+    private let cliPath = Bundle.main.bundlePath + "/Contents/Resources/maclotus"
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -25,8 +25,8 @@ struct CLIHelpView: View {
                         Text("The CLI binary is bundled at:")
                         codeBlock(cliPath)
                         Text("Symlink it to your PATH for easy access:")
-                        codeBlock("ln -sf \"\(cliPath)\" /usr/local/bin/lotuslamp")
-                        Text("After symlinking, you can use `lotuslamp` directly.")
+                        codeBlock("ln -sf \"\(cliPath)\" /usr/local/bin/maclotus")
+                        Text("After symlinking, you can use `maclotus` directly.")
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }

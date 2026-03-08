@@ -9,10 +9,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 xcodegen generate
 
 # Build the macOS status bar app (Debug — unsigned)
-xcodebuild -project LotusLamp.xcodeproj -scheme LotusLamp -configuration Debug build
+xcodebuild -project MacLotus.xcodeproj -scheme MacLotus -configuration Debug build
 
 # Build the CLI tool (Debug — unsigned)
-xcodebuild -project LotusLamp.xcodeproj -scheme lotuslamp-cli -configuration Debug build
+xcodebuild -project MacLotus.xcodeproj -scheme maclotus-cli -configuration Debug build
 
 # Release build: signed + notarized DMG (requires Developer ID cert + stored notarytool credentials)
 ./scripts/build-release.sh
@@ -27,7 +27,7 @@ No test targets exist in this project.
 
 Two targets share core BLE protocol files:
 
-**macOS Status Bar App (`LotusLamp/` sources)**
+**macOS Status Bar App (`Sources/` directory)**
 - `AppDelegate.swift` — `NSStatusItem` + `NSPopover`; creates `BLEManager` and passes it as an `@EnvironmentObject`
 - `BLEManager.swift` — `ObservableObject` wrapping `CoreBluetooth`; holds all lamp state locally (write-only BLE protocol means no read-back from device)
 - `LampCommand.swift` — static factory for all 9-byte BLE packets (`7E … EF`)
@@ -63,4 +63,4 @@ Characteristic selection mirrors `bluetooth.js`: prefer writable chars whose UUI
 - Color and brightness sends are debounced 100ms via `DispatchWorkItem` to avoid flooding BLE
 - Auto-reconnect on launch: last peripheral UUID is persisted in `UserDefaults` under `BLEConstants.lastPeripheralUUIDKey`
 - Debug builds are unsigned (`CODE_SIGN_IDENTITY: "-"`, `CODE_SIGNING_REQUIRED: NO`); Release builds use Developer ID + hardened runtime (Team ID: 36S2252ZTN)
-- CLI binary is embedded in `Contents/Resources/lotuslamp` via a post-compile script in the LotusLamp target
+- CLI binary is embedded in `Contents/Resources/maclotus` via a post-compile script in the MacLotus target

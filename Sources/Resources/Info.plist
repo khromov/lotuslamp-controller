@@ -27,7 +27,7 @@
 	<key>LSUIElement</key>
 	<true/>
 	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>LotusLamp needs Bluetooth access to connect to and control your LED light.</string>
+	<string>MacLotus needs Bluetooth access to connect to and control your LED light.</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 </dict>

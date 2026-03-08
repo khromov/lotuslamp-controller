@@ -13,7 +13,7 @@ func parseColor(_ input: String) throws -> (UInt8, UInt8, UInt8) {
     }
     let hex = input.hasPrefix("#") ? String(input.dropFirst()) : input
     guard hex.count == 6, let value = UInt32(hex, radix: 16) else {
-        throw ValidationError("'\(input)' is not a valid hex color or preset name. Run `lotuslamp colors` to see presets.")
+        throw ValidationError("'\(input)' is not a valid hex color or preset name. Run `maclotus colors` to see presets.")
     }
     let r = UInt8((value >> 16) & 0xFF)
     let g = UInt8((value >> 8) & 0xFF)
@@ -21,10 +21,10 @@ func parseColor(_ input: String) throws -> (UInt8, UInt8, UInt8) {
     return (r, g, b)
 }
 
-struct LotusLampCLI: ParsableCommand {
+struct MacLotusCLI: ParsableCommand {
     static let configuration = CommandConfiguration(
-        commandName: "lotuslamp",
-        abstract: "Control your LotusLamp from the command line.",
+        commandName: "maclotus",
+        abstract: "Control your MacLotus lamp from the command line.",
         subcommands: [On.self, Off.self, ColorCommand.self, Colors.self, Breathe.self]
     )
 }
@@ -106,8 +106,8 @@ struct Colors: ParsableCommand {
 }
 
 if CommandLine.arguments.contains("--help") || CommandLine.arguments.contains("-h") {
-    print(LotusLampCLI.helpMessage())
+    print(MacLotusCLI.helpMessage())
     exit(0)
 }
 
-LotusLampCLI.main()
+MacLotusCLI.main()

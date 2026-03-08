@@ -1,4 +1,4 @@
-# LotusLamp Controller
+# MacLotus
 
 macOS status bar app and CLI tool for controlling a BLE LED lightbulb.
 
@@ -13,22 +13,22 @@ macOS status bar app and CLI tool for controlling a BLE LED lightbulb.
 ## CLI
 
 ```bash
-lotuslamp on
-lotuslamp off
-lotuslamp color red
-lotuslamp color "#FF6A00"
-lotuslamp colors        # list all preset names
-lotuslamp --device "My Lamp" on   # target by name
+maclotus on
+maclotus off
+maclotus color red
+maclotus color "#FF6A00"
+maclotus colors        # list all preset names
+maclotus --device "My Lamp" on   # target by name
 ```
 
 ## Installation
 
-Download `LotusLamp.dmg` from [Releases](../../releases), open it, and drag LotusLamp to Applications.
+Download `MacLotus.dmg` from [Releases](../../releases), open it, and drag MacLotus to Applications.
 
 To use the CLI after installation:
 
 ```bash
-ln -sf /Applications/LotusLamp.app/Contents/Resources/lotuslamp /usr/local/bin/lotuslamp
+ln -sf /Applications/MacLotus.app/Contents/Resources/maclotus /usr/local/bin/maclotus
 ```
 
 ## Building
@@ -37,13 +37,13 @@ Requires Xcode 15+ and [XcodeGen](https://github.com/yonaskolb/XcodeGen).
 
 ```bash
 xcodegen generate
-xcodebuild -project LotusLamp.xcodeproj -scheme LotusLamp -configuration Debug build
+xcodebuild -project MacLotus.xcodeproj -scheme MacLotus -configuration Debug build
 ```
 
 To build just the CLI:
 
 ```bash
-xcodebuild -project LotusLamp.xcodeproj -scheme lotuslamp-cli -configuration Debug build
+xcodebuild -project MacLotus.xcodeproj -scheme maclotus-cli -configuration Debug build
 ```
 
 ### Release build (signed + notarized DMG)
@@ -51,7 +51,7 @@ xcodebuild -project LotusLamp.xcodeproj -scheme lotuslamp-cli -configuration Deb
 Set up notarization credentials once:
 
 ```bash
-xcrun notarytool store-credentials "LotusLamp" \
+xcrun notarytool store-credentials "MacLotus" \
   --apple-id "your@email.com" \
   --team-id "36S2252ZTN" \
   --password "app-specific-password"

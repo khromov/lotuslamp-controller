@@ -1,0 +1,525 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		14714A1E78CFE9E8906E807A /* BLEConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F234F2786CBD52EF007C75 /* BLEConstants.swift */; };
+		26A6F9CB304794C260F94274 /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 1E049AC35C908C1EA01B33C6 /* ArgumentParser */; };
+		3DBD031F5590441770C2C674 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAA9A450334089EFF7C59F3 /* AppDelegate.swift */; };
+		42947ED1559DEDE44FCBAA7B /* EffectMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C8C8019BD4C918E29316A6 /* EffectMode.swift */; };
+		64B4A5FE44C1CBDD707D5517 /* CLIHelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B78D1FC76BEC340EF0B633 /* CLIHelpView.swift */; };
+		72D6497D029D4A02DC2348C7 /* CLIBLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB167A6BC647923178182C7 /* CLIBLEManager.swift */; };
+		7CAF53DC9C4A5F227D8FEDC7 /* ControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA4DB832C93BF7ED93E8A6E /* ControlsView.swift */; };
+		8595D521DD7E1F802A4FA976 /* MainPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920E9CF93D840850D4F90362 /* MainPopoverView.swift */; };
+		902246AB86E14F8B639C5B5D /* PresetColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607327F57D3CE12A7D65AFF2 /* PresetColor.swift */; };
+		958F834A34B41620A4E63726 /* ConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C83CCD0FD0A4C80F3816723 /* ConnectionView.swift */; };
+		991A5707EF5C48982D343C37 /* MacLotusApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB83FE2E83258CB0C308B424 /* MacLotusApp.swift */; };
+		9C074BF7C30ABCBCADFFF2B7 /* maclotus-cli in Resources */ = {isa = PBXBuildFile; fileRef = 74C61619F0507E02386AC896 /* maclotus-cli */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		A50EFBFE3D4C68289F8C363F /* LampCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3016917F569AA9946757A10 /* LampCommand.swift */; };
+		B510912FD5E26E364BE09D01 /* PresetColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607327F57D3CE12A7D65AFF2 /* PresetColor.swift */; };
+		B70F0FA02D42283A1C8A5AEC /* BLEConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F234F2786CBD52EF007C75 /* BLEConstants.swift */; };
+		BD16B530F327B31DB3CB165B /* EffectMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C8C8019BD4C918E29316A6 /* EffectMode.swift */; };
+		CE633EE246D8C87B07305BD2 /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0645F6AD516E91307B130EF9 /* BLEManager.swift */; };
+		CF6122FF923497538FF1E788 /* LampCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3016917F569AA9946757A10 /* LampCommand.swift */; };
+		FC60DD373C9180A99187799F /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794787DA75DC3445445D7E66 /* main.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CE094E505EB0AEF2B72A48B9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0AEC8753908873B071FEDB0F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F2817A2775640329EDBB3915;
+			remoteInfo = "maclotus-cli";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0645F6AD516E91307B130EF9 /* BLEManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
+		07C8C8019BD4C918E29316A6 /* EffectMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectMode.swift; sourceTree = "<group>"; };
+		0955AAD9EB8D491670476C0D /* MacLotus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacLotus.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0C83CCD0FD0A4C80F3816723 /* ConnectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionView.swift; sourceTree = "<group>"; };
+		48F234F2786CBD52EF007C75 /* BLEConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEConstants.swift; sourceTree = "<group>"; };
+		5BB167A6BC647923178182C7 /* CLIBLEManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLIBLEManager.swift; sourceTree = "<group>"; };
+		5DAA9A450334089EFF7C59F3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		607327F57D3CE12A7D65AFF2 /* PresetColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetColor.swift; sourceTree = "<group>"; };
+		74C61619F0507E02386AC896 /* maclotus-cli */ = {isa = PBXFileReference; includeInIndex = 0; path = "maclotus-cli"; sourceTree = BUILT_PRODUCTS_DIR; };
+		794787DA75DC3445445D7E66 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		87B78D1FC76BEC340EF0B633 /* CLIHelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLIHelpView.swift; sourceTree = "<group>"; };
+		920E9CF93D840850D4F90362 /* MainPopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPopoverView.swift; sourceTree = "<group>"; };
+		E3016917F569AA9946757A10 /* LampCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LampCommand.swift; sourceTree = "<group>"; };
+		EDA4DB832C93BF7ED93E8A6E /* ControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlsView.swift; sourceTree = "<group>"; };
+		FB83FE2E83258CB0C308B424 /* MacLotusApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacLotusApp.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CEE9720FA6453749B23118C8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				26A6F9CB304794C260F94274 /* ArgumentParser in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4648C072347D48C18449AB82 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				87B78D1FC76BEC340EF0B633 /* CLIHelpView.swift */,
+				0C83CCD0FD0A4C80F3816723 /* ConnectionView.swift */,
+				EDA4DB832C93BF7ED93E8A6E /* ControlsView.swift */,
+				920E9CF93D840850D4F90362 /* MainPopoverView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		50B2F47D0EAA123CE1E27B8E /* CLI */ = {
+			isa = PBXGroup;
+			children = (
+				5BB167A6BC647923178182C7 /* CLIBLEManager.swift */,
+				794787DA75DC3445445D7E66 /* main.swift */,
+			);
+			path = CLI;
+			sourceTree = "<group>";
+		};
+		52D4F79C0C5CCB5D23C13905 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				5DAA9A450334089EFF7C59F3 /* AppDelegate.swift */,
+				48F234F2786CBD52EF007C75 /* BLEConstants.swift */,
+				0645F6AD516E91307B130EF9 /* BLEManager.swift */,
+				07C8C8019BD4C918E29316A6 /* EffectMode.swift */,
+				E3016917F569AA9946757A10 /* LampCommand.swift */,
+				FB83FE2E83258CB0C308B424 /* MacLotusApp.swift */,
+				607327F57D3CE12A7D65AFF2 /* PresetColor.swift */,
+				4648C072347D48C18449AB82 /* Views */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		850184EFC742BBDBADF66274 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				74C61619F0507E02386AC896 /* maclotus-cli */,
+				0955AAD9EB8D491670476C0D /* MacLotus.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BCAE27B57099A6BF98AF0AC6 = {
+			isa = PBXGroup;
+			children = (
+				50B2F47D0EAA123CE1E27B8E /* CLI */,
+				52D4F79C0C5CCB5D23C13905 /* Sources */,
+				850184EFC742BBDBADF66274 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		32CE78B450666EF2E44AF19C /* MacLotus */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1F27E1A051C8FE93D57C5D04 /* Build configuration list for PBXNativeTarget "MacLotus" */;
+			buildPhases = (
+				C42DD10E5871295AD4EF6A82 /* Sources */,
+				3361196AF450572637D2DF72 /* Embed CLI Binary */,
+				94FE85DEDB7025197F4B2999 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				885190B2D67713909A849A7B /* PBXTargetDependency */,
+			);
+			name = MacLotus;
+			packageProductDependencies = (
+			);
+			productName = MacLotus;
+			productReference = 0955AAD9EB8D491670476C0D /* MacLotus.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F2817A2775640329EDBB3915 /* maclotus-cli */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E5CB1457AB77842FEB4C1935 /* Build configuration list for PBXNativeTarget "maclotus-cli" */;
+			buildPhases = (
+				2C203FC38523A7DAD3079151 /* Sources */,
+				CEE9720FA6453749B23118C8 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "maclotus-cli";
+			packageProductDependencies = (
+				1E049AC35C908C1EA01B33C6 /* ArgumentParser */,
+			);
+			productName = "maclotus-cli";
+			productReference = 74C61619F0507E02386AC896 /* maclotus-cli */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0AEC8753908873B071FEDB0F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+				};
+			};
+			buildConfigurationList = FB41B757AE9A14EA0E0DEED4 /* Build configuration list for PBXProject "MacLotus" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = BCAE27B57099A6BF98AF0AC6;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				9789047A6332D7D68A60E507 /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 850184EFC742BBDBADF66274 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				32CE78B450666EF2E44AF19C /* MacLotus */,
+				F2817A2775640329EDBB3915 /* maclotus-cli */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		94FE85DEDB7025197F4B2999 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9C074BF7C30ABCBCADFFF2B7 /* maclotus-cli in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3361196AF450572637D2DF72 /* Embed CLI Binary */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Embed CLI Binary";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cp \"${BUILT_PRODUCTS_DIR}/maclotus\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/Resources/maclotus\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2C203FC38523A7DAD3079151 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B70F0FA02D42283A1C8A5AEC /* BLEConstants.swift in Sources */,
+				72D6497D029D4A02DC2348C7 /* CLIBLEManager.swift in Sources */,
+				42947ED1559DEDE44FCBAA7B /* EffectMode.swift in Sources */,
+				CF6122FF923497538FF1E788 /* LampCommand.swift in Sources */,
+				B510912FD5E26E364BE09D01 /* PresetColor.swift in Sources */,
+				FC60DD373C9180A99187799F /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C42DD10E5871295AD4EF6A82 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3DBD031F5590441770C2C674 /* AppDelegate.swift in Sources */,
+				14714A1E78CFE9E8906E807A /* BLEConstants.swift in Sources */,
+				CE633EE246D8C87B07305BD2 /* BLEManager.swift in Sources */,
+				64B4A5FE44C1CBDD707D5517 /* CLIHelpView.swift in Sources */,
+				958F834A34B41620A4E63726 /* ConnectionView.swift in Sources */,
+				7CAF53DC9C4A5F227D8FEDC7 /* ControlsView.swift in Sources */,
+				BD16B530F327B31DB3CB165B /* EffectMode.swift in Sources */,
+				A50EFBFE3D4C68289F8C363F /* LampCommand.swift in Sources */,
+				991A5707EF5C48982D343C37 /* MacLotusApp.swift in Sources */,
+				8595D521DD7E1F802A4FA976 /* MainPopoverView.swift in Sources */,
+				902246AB86E14F8B639C5B5D /* PresetColor.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		885190B2D67713909A849A7B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F2817A2775640329EDBB3915 /* maclotus-cli */;
+			targetProxy = CE094E505EB0AEF2B72A48B9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		45BD74894F9B4C43280D12AB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGNING_REQUIRED = YES;
+				CODE_SIGN_ENTITLEMENTS = Sources/Resources/MacLotus.entitlements;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 36S2252ZTN;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = Sources/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = se.khromov.maclotus;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		708604437DDAD3D85877251D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEPLOYMENT_POSTPROCESSING = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				STRIP_INSTALLED_PRODUCT = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Release;
+		};
+		71AC8EC6FEC2D86F2AD37026 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGNING_REQUIRED = YES;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 36S2252ZTN;
+				ENABLE_HARDENED_RUNTIME = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = se.khromov.maclotus.cli;
+				PRODUCT_NAME = maclotus;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		A6ADE078709957E61A69EC52 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGNING_REQUIRED = NO;
+				CODE_SIGN_ENTITLEMENTS = Sources/Resources/MacLotus.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
+				INFOPLIST_FILE = Sources/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = se.khromov.maclotus;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		B0BBE26B7EB6679E04B30C2C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Debug;
+		};
+		B625E159115AD7F83D0CB252 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGNING_REQUIRED = NO;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = se.khromov.maclotus.cli;
+				PRODUCT_NAME = maclotus;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1F27E1A051C8FE93D57C5D04 /* Build configuration list for PBXNativeTarget "MacLotus" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A6ADE078709957E61A69EC52 /* Debug */,
+				45BD74894F9B4C43280D12AB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E5CB1457AB77842FEB4C1935 /* Build configuration list for PBXNativeTarget "maclotus-cli" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B625E159115AD7F83D0CB252 /* Debug */,
+				71AC8EC6FEC2D86F2AD37026 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		FB41B757AE9A14EA0E0DEED4 /* Build configuration list for PBXProject "MacLotus" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B0BBE26B7EB6679E04B30C2C /* Debug */,
+				708604437DDAD3D85877251D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9789047A6332D7D68A60E507 /* XCRemoteSwiftPackageReference "swift-argument-parser" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-argument-parser";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1E049AC35C908C1EA01B33C6 /* ArgumentParser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9789047A6332D7D68A60E507 /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
+			productName = ArgumentParser;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 0AEC8753908873B071FEDB0F /* Project object */;
+}

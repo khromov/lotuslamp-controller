@@ -1,4 +1,4 @@
-name: LotusLamp
+name: MacLotus
 options:
   bundleIdPrefix: se.khromov
   deploymentTarget:
@@ -27,21 +27,21 @@ settings:
       COPY_PHASE_STRIP: "YES"
 
 targets:
-  LotusLamp:
+  MacLotus:
     type: application
     platform: macOS
     sources:
       - path: Sources
         excludes:
           - Resources/Info.plist
-          - Resources/LotusLamp.entitlements
+          - Resources/MacLotus.entitlements
     dependencies:
-      - target: lotuslamp-cli
+      - target: maclotus-cli
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: se.khromov.lotuslamp
+        PRODUCT_BUNDLE_IDENTIFIER: se.khromov.maclotus
         INFOPLIST_FILE: Sources/Resources/Info.plist
-        CODE_SIGN_ENTITLEMENTS: Sources/Resources/LotusLamp.entitlements
+        CODE_SIGN_ENTITLEMENTS: Sources/Resources/MacLotus.entitlements
         CODE_SIGN_IDENTITY: "Developer ID Application"
         DEVELOPMENT_TEAM: "36S2252ZTN"
         CODE_SIGNING_REQUIRED: "YES"
@@ -54,11 +54,11 @@ targets:
           ENABLE_HARDENED_RUNTIME: "NO"
     postCompileScripts:
       - script: |
-          cp "${BUILT_PRODUCTS_DIR}/lotuslamp" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/Resources/lotuslamp"
+          cp "${BUILT_PRODUCTS_DIR}/maclotus" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/Resources/maclotus"
         name: "Embed CLI Binary"
         basedOnDependencyAnalysis: false
 
-  lotuslamp-cli:
+  maclotus-cli:
     type: tool
     platform: macOS
     sources:
@@ -76,8 +76,8 @@ targets:
         product: ArgumentParser
     settings:
       base:
-        PRODUCT_NAME: lotuslamp
-        PRODUCT_BUNDLE_IDENTIFIER: se.khromov.lotuslamp.cli
+        PRODUCT_NAME: maclotus
+        PRODUCT_BUNDLE_IDENTIFIER: se.khromov.maclotus.cli
         CODE_SIGN_IDENTITY: "Developer ID Application"
         DEVELOPMENT_TEAM: "36S2252ZTN"
         CODE_SIGNING_REQUIRED: "YES"

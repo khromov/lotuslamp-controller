@@ -31,9 +31,9 @@ enum BLEConstants {
 
     /// Shared file written by the GUI app so the CLI tool can find the last device.
     static let deviceUUIDFileURL: URL = FileManager.default.homeDirectoryForCurrentUser
-        .appendingPathComponent(".lotuslamp_device")
+        .appendingPathComponent(".maclotus_device")
 
     /// PID file used to coordinate exclusive CLI access to the lamp.
     static let pidFileURL: URL = FileManager.default.homeDirectoryForCurrentUser
-        .appendingPathComponent(".lotuslamp_cli.pid")
+        .appendingPathComponent(".maclotus_cli.pid")
 }

@@ -4,11 +4,11 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 TEAM_ID="36S2252ZTN"
-APP_NAME="LotusLamp"
-BUNDLE_ID="com.lotuslamp.controller"
-KEYCHAIN_PROFILE="LotusLamp"
+APP_NAME="MacLotus"
+BUNDLE_ID="se.khromov.maclotus"
+KEYCHAIN_PROFILE="MacLotus"
 BUILD_DIR="$REPO_ROOT/build/release"
-DMG_NAME="LotusLamp.dmg"
+DMG_NAME="MacLotus.dmg"
 
 SKIP_NOTARIZE=false
 for arg in "$@"; do
@@ -21,8 +21,8 @@ xcodegen generate
 
 echo "==> Building Release"
 xcodebuild \
-  -project LotusLamp.xcodeproj \
-  -scheme LotusLamp \
+  -project MacLotus.xcodeproj \
+  -scheme MacLotus \
   -configuration Release \
   -derivedDataPath "$BUILD_DIR/DerivedData" \
   SYMROOT="$BUILD_DIR/Products" \
@@ -39,7 +39,7 @@ fi
 echo "==> Re-signing embedded CLI binary"
 codesign --force --options runtime \
   --sign "Developer ID Application: $(security find-identity -v -p codesigning | grep "Developer ID Application" | grep "$TEAM_ID" | head -1 | sed 's/.*"\(.*\)"/\1/')" \
-  "$APP_PATH/Contents/Resources/lotuslamp"
+  "$APP_PATH/Contents/Resources/maclotus"
 
 echo "==> Verifying app signature"
 codesign --verify --deep --strict "$APP_PATH"
