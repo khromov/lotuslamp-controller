@@ -21,15 +21,15 @@ targets:
     type: application
     platform: macOS
     sources:
-      - path: LotusLamp
+      - path: Sources
         excludes:
           - Resources/Info.plist
           - Resources/LotusLamp.entitlements
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.lotuslamp.controller
-        INFOPLIST_FILE: LotusLamp/Resources/Info.plist
-        CODE_SIGN_ENTITLEMENTS: LotusLamp/Resources/LotusLamp.entitlements
+        INFOPLIST_FILE: Sources/Resources/Info.plist
+        CODE_SIGN_ENTITLEMENTS: Sources/Resources/LotusLamp.entitlements
         CODE_SIGN_IDENTITY: "-"
         CODE_SIGNING_REQUIRED: "NO"
         ENABLE_HARDENED_RUNTIME: "NO"
@@ -39,10 +39,14 @@ targets:
     platform: macOS
     sources:
       - path: CLI
-      - path: LotusLamp/LampCommand.swift
-      - path: LotusLamp/BLEConstants.swift
-      - path: LotusLamp/PresetColor.swift
-      - path: LotusLamp/EffectMode.swift
+      - path: Sources/LampCommand.swift
+        type: file
+      - path: Sources/BLEConstants.swift
+        type: file
+      - path: Sources/PresetColor.swift
+        type: file
+      - path: Sources/EffectMode.swift
+        type: file
     dependencies:
       - package: ArgumentParser
         product: ArgumentParser
