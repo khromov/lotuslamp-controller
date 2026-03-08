@@ -288,7 +288,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.lotuslamp.controller;
+				PRODUCT_BUNDLE_IDENTIFIER = se.khromov.lotuslamp;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -308,7 +308,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.lotuslamp.controller;
+				PRODUCT_BUNDLE_IDENTIFIER = se.khromov.lotuslamp;
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -388,7 +388,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.lotuslamp.cli;
+				PRODUCT_BUNDLE_IDENTIFIER = se.khromov.lotuslamp.cli;
 				PRODUCT_NAME = lotuslamp;
 				SDKROOT = macosx;
 			};
@@ -406,7 +406,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.lotuslamp.cli;
+				PRODUCT_BUNDLE_IDENTIFIER = se.khromov.lotuslamp.cli;
 				PRODUCT_NAME = lotuslamp;
 				SDKROOT = macosx;
 			};

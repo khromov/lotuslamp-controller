@@ -1,6 +1,6 @@
 name: LotusLamp
 options:
-  bundleIdPrefix: com.lotuslamp
+  bundleIdPrefix: se.khromov
   deploymentTarget:
     macOS: "13.0"
   xcodeVersion: "15"
@@ -39,7 +39,7 @@ targets:
       - target: lotuslamp-cli
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.lotuslamp.controller
+        PRODUCT_BUNDLE_IDENTIFIER: se.khromov.lotuslamp
         INFOPLIST_FILE: Sources/Resources/Info.plist
         CODE_SIGN_ENTITLEMENTS: Sources/Resources/LotusLamp.entitlements
         CODE_SIGN_IDENTITY: "Developer ID Application"
@@ -77,7 +77,7 @@ targets:
     settings:
       base:
         PRODUCT_NAME: lotuslamp
-        PRODUCT_BUNDLE_IDENTIFIER: com.lotuslamp.cli
+        PRODUCT_BUNDLE_IDENTIFIER: se.khromov.lotuslamp.cli
         CODE_SIGN_IDENTITY: "Developer ID Application"
         DEVELOPMENT_TEAM: "36S2252ZTN"
         CODE_SIGNING_REQUIRED: "YES"
