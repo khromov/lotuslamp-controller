@@ -19,6 +19,9 @@ xcodebuild -project MacLotus.xcodeproj -scheme maclotus-cli -configuration Debug
 
 # Release build without notarization (quick test)
 ./scripts/build-release.sh --skip-notarize
+
+# Store notarization credentials (one-time setup)
+xcrun notarytool store-credentials "MacLotus" --apple-id "your@email.com" --team-id "36S2252ZTN" --password "app-specific-password"
 ```
 
 No test targets exist in this project.
@@ -36,7 +39,7 @@ Two targets share core BLE protocol files:
 - `PresetColor.swift`, `EffectMode.swift` — data types for UI color/effect pickers
 
 **CLI (`CLI/` sources)**
-- `main.swift` — `ArgumentParser` commands: `on`, `off`, `color <hex|preset>`, `colors`
+- `main.swift` — `ArgumentParser` commands: `on`, `off`, `color <hex|preset>`, `colors`; supports `--device <name>` to target by device name
 - `CLIBLEManager.swift` — synchronous BLE wrapper (blocks via `RunLoop`) for CLI use
 - Shares `LampCommand.swift`, `BLEConstants.swift`, `PresetColor.swift`, `EffectMode.swift` with the app target
 
