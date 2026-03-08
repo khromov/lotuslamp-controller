@@ -25,6 +25,7 @@
 		BD16B530F327B31DB3CB165B /* EffectMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C8C8019BD4C918E29316A6 /* EffectMode.swift */; };
 		CE633EE246D8C87B07305BD2 /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0645F6AD516E91307B130EF9 /* BLEManager.swift */; };
 		CF6122FF923497538FF1E788 /* LampCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3016917F569AA9946757A10 /* LampCommand.swift */; };
+		D870D27180582859D8AB9153 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D51212C9C25DC3F8C8872D24 /* Assets.xcassets */; };
 		FC60DD373C9180A99187799F /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794787DA75DC3445445D7E66 /* main.swift */; };
 /* End PBXBuildFile section */
 
@@ -51,6 +52,7 @@
 		794787DA75DC3445445D7E66 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		87B78D1FC76BEC340EF0B633 /* CLIHelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLIHelpView.swift; sourceTree = "<group>"; };
 		920E9CF93D840850D4F90362 /* MainPopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPopoverView.swift; sourceTree = "<group>"; };
+		D51212C9C25DC3F8C8872D24 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E3016917F569AA9946757A10 /* LampCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LampCommand.swift; sourceTree = "<group>"; };
 		EDA4DB832C93BF7ED93E8A6E /* ControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlsView.swift; sourceTree = "<group>"; };
 		FB83FE2E83258CB0C308B424 /* MacLotusApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacLotusApp.swift; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				5DAA9A450334089EFF7C59F3 /* AppDelegate.swift */,
+				D51212C9C25DC3F8C8872D24 /* Assets.xcassets */,
 				48F234F2786CBD52EF007C75 /* BLEConstants.swift */,
 				0645F6AD516E91307B130EF9 /* BLEManager.swift */,
 				07C8C8019BD4C918E29316A6 /* EffectMode.swift */,
@@ -202,6 +205,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D870D27180582859D8AB9153 /* Assets.xcassets in Resources */,
 				9C074BF7C30ABCBCADFFF2B7 /* maclotus-cli in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
