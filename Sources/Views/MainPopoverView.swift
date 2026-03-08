@@ -81,5 +81,8 @@ struct MainPopoverView: View {
         .sheet(isPresented: $showCLIHelp) {
             CLIHelpView(isPresented: $showCLIHelp)
         }
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("PopoverDidClose"))) { _ in
+            showCLIHelp = false
+        }
     }
 }

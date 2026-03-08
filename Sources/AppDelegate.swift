@@ -48,6 +48,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
     }
 
     func popoverDidClose(_ notification: Notification) {
-        // Nothing needed
+        NotificationCenter.default.post(name: Notification.Name("PopoverDidClose"), object: nil)
     }
 }

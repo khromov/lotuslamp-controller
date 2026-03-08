@@ -12,6 +12,13 @@ final class CLIBLEManager: NSObject {
     private var writeType: CBCharacteristicWriteType = .withoutResponse
     private var commandSent = false
 
+    // Breathe mode state
+    private var breatheMode = false
+    private var breatheColor: Data?
+    private var breatheCycleDuration: Double = 4.0
+    private var breatheTimer: Timer?
+    private var breatheStartTime: Date?
+
     init(deviceName: String?) {
         self.deviceName = deviceName
         super.init()
@@ -33,6 +40,26 @@ final class CLIBLEManager: NSObject {
         }
 
         CFRunLoopRun()
+    }
+
+    /// Connect to the lamp and run a breathe animation until Ctrl+C.
+    func executeBreathe(color: Data?, cycleDuration: Double) {
+        fputs("[BLE] executeBreathe() called\n", stderr)
+        breatheMode = true
+        breatheColor = color
+        breatheCycleDuration = cycleDuration
+        central = CBCentralManager(delegate: self, queue: .main)
+
+        // Install SIGINT handler to stop on Ctrl+C
+        signal(SIGINT) { _ in
+            fputs("\n[BLE] interrupted, stopping breathe\n", stderr)
+            CFRunLoopStop(CFRunLoopGetMain())
+        }
+
+        fputs("Breathe running (Ctrl+C to stop)...\n", stderr)
+        CFRunLoopRun()
+
+        breatheTimer?.invalidate()
     }
 
     // MARK: - Characteristic selection (mirrors BLEManager.swift)
@@ -195,13 +222,36 @@ extension CLIBLEManager: CBPeripheralDelegate {
 
         fputs("[BLE] sending init packet...\n", stderr)
         sendCommand(LampCommand.initialize)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
-            guard let self, let cmd = self.command else { return }
-            fputs("[BLE] sending command...\n", stderr)
-            self.sendCommand(cmd)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                fputs("[BLE] done\n", stderr)
-                self.finish()
+
+        if breatheMode {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
+                guard let self else { return }
+                if let colorCmd = self.breatheColor {
+                    fputs("[BLE] setting color...\n", stderr)
+                    self.sendCommand(colorCmd)
+                }
+                fputs("[BLE] starting breathe timer\n", stderr)
+                self.breatheStartTime = Date()
+                let cycleDuration = self.breatheCycleDuration
+                self.breatheTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
+                    guard let self, let startTime = self.breatheStartTime else { return }
+                    let elapsed = Date().timeIntervalSince(startTime)
+                    let phase = (elapsed / cycleDuration) * 2 * Double.pi
+                    let normalized = (sin(phase - Double.pi / 2) + 1) / 2
+                    let brightnessValue = 10 + Int(normalized * 90)
+                    fputs("[breathe] brightness: \(brightnessValue)%\n", stderr)
+                    self.sendCommand(LampCommand.setBrightness(brightnessValue))
+                }
+            }
+        } else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
+                guard let self, let cmd = self.command else { return }
+                fputs("[BLE] sending command...\n", stderr)
+                self.sendCommand(cmd)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    fputs("[BLE] done\n", stderr)
+                    self.finish()
+                }
             }
         }
     }

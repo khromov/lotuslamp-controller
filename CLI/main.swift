@@ -6,11 +6,26 @@ struct GlobalOptions: ParsableArguments {
     var device: String?
 }
 
+func parseColor(_ input: String) throws -> (UInt8, UInt8, UInt8) {
+    let lower = input.lowercased()
+    if let preset = PresetColor.all.first(where: { $0.name.lowercased() == lower }) {
+        return (preset.r, preset.g, preset.b)
+    }
+    let hex = input.hasPrefix("#") ? String(input.dropFirst()) : input
+    guard hex.count == 6, let value = UInt32(hex, radix: 16) else {
+        throw ValidationError("'\(input)' is not a valid hex color or preset name. Run `lotuslamp colors` to see presets.")
+    }
+    let r = UInt8((value >> 16) & 0xFF)
+    let g = UInt8((value >> 8) & 0xFF)
+    let b = UInt8(value & 0xFF)
+    return (r, g, b)
+}
+
 struct LotusLampCLI: ParsableCommand {
     static let configuration = CommandConfiguration(
         commandName: "lotuslamp",
         abstract: "Control your LotusLamp from the command line.",
-        subcommands: [On.self, Off.self, ColorCommand.self, Colors.self]
+        subcommands: [On.self, Off.self, ColorCommand.self, Colors.self, Breathe.self]
     )
 }
 
@@ -50,23 +65,31 @@ struct ColorCommand: ParsableCommand {
         let manager = CLIBLEManager(deviceName: options.device)
         manager.execute(command: LampCommand.setColor(r: r, g: g, b: b))
     }
+}
 
-    private func parseColor(_ input: String) throws -> (UInt8, UInt8, UInt8) {
-        // Try preset name first
-        let lower = input.lowercased()
-        if let preset = PresetColor.all.first(where: { $0.name.lowercased() == lower }) {
-            return (preset.r, preset.g, preset.b)
-        }
+struct Breathe: ParsableCommand {
+    static let configuration = CommandConfiguration(
+        abstract: "Fade the lamp brightness up and down in a breathe pattern (runs until Ctrl+C). Optionally set a color before breathing starts, e.g. 'breathe FF0000' or 'breathe red --cycle 6'."
+    )
 
-        // Try hex: strip leading #
-        let hex = input.hasPrefix("#") ? String(input.dropFirst()) : input
-        guard hex.count == 6, let value = UInt32(hex, radix: 16) else {
-            throw ValidationError("'\(input)' is not a valid hex color or preset name. Run `lotuslamp colors` to see presets.")
+    @Argument(help: "Hex color (FF0000 or #FF0000) or preset name. Optional.")
+    var colorValue: String?
+
+    @Option(name: .shortAndLong, help: "Cycle duration in seconds (default: 4).")
+    var cycle: Double = 4.0
+
+    @OptionGroup var options: GlobalOptions
+
+    func run() throws {
+        let colorCommand: Data?
+        if let cv = colorValue {
+            let (r, g, b) = try parseColor(cv)
+            colorCommand = LampCommand.setColor(r: r, g: g, b: b)
+        } else {
+            colorCommand = nil
         }
-        let r = UInt8((value >> 16) & 0xFF)
-        let g = UInt8((value >> 8) & 0xFF)
-        let b = UInt8(value & 0xFF)
-        return (r, g, b)
+        let manager = CLIBLEManager(deviceName: options.device)
+        manager.executeBreathe(color: colorCommand, cycleDuration: cycle)
     }
 }
 
@@ -80,6 +103,11 @@ struct Colors: ParsableCommand {
             print("  \(preset.name.padding(toLength: 12, withPad: " ", startingAt: 0)) #\(hex)")
         }
     }
+}
+
+if CommandLine.arguments.contains("--help") || CommandLine.arguments.contains("-h") {
+    print(LotusLampCLI.helpMessage())
+    exit(0)
 }
 
 LotusLampCLI.main()
