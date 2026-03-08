@@ -1,10 +1,14 @@
-name: LotusLamp
+name: MacLotus
 options:
-  bundleIdPrefix: com.lotuslamp
+  bundleIdPrefix: se.khromov
   deploymentTarget:
     macOS: "13.0"
   xcodeVersion: "15"
   createIntermediateGroups: true
+
+configs:
+  Debug: debug
+  Release: release
 
 packages:
   ArgumentParser:
@@ -15,26 +19,46 @@ settings:
   base:
     SWIFT_VERSION: "5.9"
     MACOSX_DEPLOYMENT_TARGET: "13.0"
+  configs:
+    Release:
+      SWIFT_OPTIMIZATION_LEVEL: "-O"
+      DEPLOYMENT_POSTPROCESSING: "YES"
+      STRIP_INSTALLED_PRODUCT: "YES"
+      COPY_PHASE_STRIP: "YES"
 
 targets:
-  LotusLamp:
+  MacLotus:
     type: application
     platform: macOS
     sources:
       - path: Sources
         excludes:
           - Resources/Info.plist
-          - Resources/LotusLamp.entitlements
+          - Resources/MacLotus.entitlements
+    dependencies:
+      - target: maclotus-cli
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.lotuslamp.controller
+        PRODUCT_BUNDLE_IDENTIFIER: se.khromov.maclotus
         INFOPLIST_FILE: Sources/Resources/Info.plist
-        CODE_SIGN_ENTITLEMENTS: Sources/Resources/LotusLamp.entitlements
-        CODE_SIGN_IDENTITY: "-"
-        CODE_SIGNING_REQUIRED: "NO"
-        ENABLE_HARDENED_RUNTIME: "NO"
+        CODE_SIGN_ENTITLEMENTS: Sources/Resources/MacLotus.entitlements
+        CODE_SIGN_IDENTITY: "Developer ID Application"
+        DEVELOPMENT_TEAM: "36S2252ZTN"
+        CODE_SIGNING_REQUIRED: "YES"
+        ENABLE_HARDENED_RUNTIME: "YES"
+      configs:
+        Debug:
+          CODE_SIGN_IDENTITY: "-"
+          DEVELOPMENT_TEAM: ""
+          CODE_SIGNING_REQUIRED: "NO"
+          ENABLE_HARDENED_RUNTIME: "NO"
+    postCompileScripts:
+      - script: |
+          cp "${BUILT_PRODUCTS_DIR}/maclotus" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/Resources/maclotus"
+        name: "Embed CLI Binary"
+        basedOnDependencyAnalysis: false
 
-  lotuslamp-cli:
+  maclotus-cli:
     type: tool
     platform: macOS
     sources:
@@ -52,8 +76,15 @@ targets:
         product: ArgumentParser
     settings:
       base:
-        PRODUCT_NAME: lotuslamp
-        PRODUCT_BUNDLE_IDENTIFIER: com.lotuslamp.cli
-        CODE_SIGN_IDENTITY: "-"
-        CODE_SIGNING_REQUIRED: "NO"
-        ENABLE_HARDENED_RUNTIME: "NO"
+        PRODUCT_NAME: maclotus
+        PRODUCT_BUNDLE_IDENTIFIER: se.khromov.maclotus.cli
+        CODE_SIGN_IDENTITY: "Developer ID Application"
+        DEVELOPMENT_TEAM: "36S2252ZTN"
+        CODE_SIGNING_REQUIRED: "YES"
+        ENABLE_HARDENED_RUNTIME: "YES"
+      configs:
+        Debug:
+          CODE_SIGN_IDENTITY: "-"
+          DEVELOPMENT_TEAM: ""
+          CODE_SIGNING_REQUIRED: "NO"
+          ENABLE_HARDENED_RUNTIME: "NO"

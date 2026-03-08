@@ -19,7 +19,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
 
         if let button = statusItem.button {
             button.image = NSImage(systemSymbolName: "lightbulb.fill",
-                                   accessibilityDescription: "LotusLamp")
+                                   accessibilityDescription: "MacLotus")
             button.image?.isTemplate = true
             button.action = #selector(togglePopover)
             button.target = self
@@ -48,6 +48,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
     }
 
     func popoverDidClose(_ notification: Notification) {
-        // Nothing needed
+        NotificationCenter.default.post(name: Notification.Name("PopoverDidClose"), object: nil)
     }
 }

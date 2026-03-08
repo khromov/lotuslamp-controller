@@ -13,7 +13,7 @@ struct MainPopoverView: View {
             HStack {
                 Image(systemName: "lightbulb.fill")
                     .foregroundStyle(.yellow)
-                Text("LotusLamp")
+                Text("MacLotus")
                     .font(.title3.bold())
                 Spacer()
             }
@@ -80,6 +80,9 @@ struct MainPopoverView: View {
         .frame(width: 320)
         .sheet(isPresented: $showCLIHelp) {
             CLIHelpView(isPresented: $showCLIHelp)
+        }
+        .onReceive(NotificationCenter.default.publisher(for: Notification.Name("PopoverDidClose"))) { _ in
+            showCLIHelp = false
         }
     }
 }

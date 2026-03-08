@@ -44,6 +44,9 @@ class BLEManager: NSObject, ObservableObject {
     @Published var brightness: Double = 100
     @Published var activeEffectID: UInt8? = nil
     @Published var effectSpeed: Double = 50
+    @Published var isBreathing: Bool = false
+    @Published var breatheCycleDuration: Double = 4.0
+    @Published var breatheColor: Color? = nil
 
     var connectedPeripheralName: String? {
         connectedPeripheral?.name ?? "Unknown"
@@ -59,6 +62,8 @@ class BLEManager: NSObject, ObservableObject {
     private var pendingColorWork: DispatchWorkItem?
     private var pendingBrightnessWork: DispatchWorkItem?
     private var pendingSpeedWork: DispatchWorkItem?
+    private var breatheTimer: Timer?
+    private var breatheStartTime: Date?
 
     override init() {
         super.init()
@@ -102,11 +107,39 @@ class BLEManager: NSObject, ObservableObject {
     }
 
     func sendPowerOff() {
+        stopBreathing()
         isPoweredOn = false
         sendCommand(LampCommand.powerOff)
     }
 
+    func startBreathing() {
+        activeEffectID = nil
+        if let color = breatheColor {
+            let (r, g, b) = color.rgbComponents
+            sendCommand(LampCommand.setColor(r: r, g: g, b: b))
+        }
+        breatheStartTime = Date()
+        let cycleDuration = breatheCycleDuration
+        breatheTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
+            guard let self, let startTime = self.breatheStartTime else { return }
+            let elapsed = Date().timeIntervalSince(startTime)
+            let phase = (elapsed / cycleDuration) * 2 * Double.pi
+            let normalized = (sin(phase - Double.pi / 2) + 1) / 2
+            let brightnessValue = 1.0 + normalized * 99.0
+            self.brightness = brightnessValue
+            self.sendCommand(LampCommand.setBrightness(Int(brightnessValue)))
+        }
+        isBreathing = true
+    }
+
+    func stopBreathing() {
+        breatheTimer?.invalidate()
+        breatheTimer = nil
+        isBreathing = false
+    }
+
     func sendColor(_ color: Color) {
+        stopBreathing()
         currentColor = color
         activeEffectID = nil
         let (r, g, b) = color.rgbComponents
@@ -119,6 +152,7 @@ class BLEManager: NSObject, ObservableObject {
     }
 
     func sendBrightness(_ value: Double) {
+        stopBreathing()
         brightness = value
         pendingBrightnessWork?.cancel()
         let work = DispatchWorkItem { [weak self] in
@@ -129,6 +163,7 @@ class BLEManager: NSObject, ObservableObject {
     }
 
     func sendEffect(_ mode: UInt8) {
+        stopBreathing()
         activeEffectID = mode
         sendCommand(LampCommand.setEffect(mode: mode))
     }
@@ -257,6 +292,7 @@ extension BLEManager: CBCentralManagerDelegate {
     func centralManager(_ central: CBCentralManager,
                         didDisconnectPeripheral peripheral: CBPeripheral,
                         error: Error?) {
+        stopBreathing()
         writeCharacteristic = nil
         connectedPeripheral = nil
         connectionStatus = .disconnected

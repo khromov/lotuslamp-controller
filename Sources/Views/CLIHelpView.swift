@@ -3,6 +3,8 @@ import SwiftUI
 struct CLIHelpView: View {
     @Binding var isPresented: Bool
 
+    private let cliPath = Bundle.main.bundlePath + "/Contents/Resources/maclotus"
+
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             // Header
@@ -20,15 +22,13 @@ struct CLIHelpView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
                     section("Installation") {
-                        Text("After building, symlink or copy the binary to a directory in your PATH:")
-                        codeBlock("""
-ln -s /path/to/lotuslamp /usr/local/bin/lotuslamp
-""")
-                        Text("Or build and install in one step with Xcode:")
-                        codeBlock("""
-xcodebuild -scheme lotuslamp-cli -configuration Release \\
-  SYMROOT=/usr/local/bin build
-""")
+                        Text("The CLI binary is bundled at:")
+                        codeBlock(cliPath)
+                        Text("Symlink it to your PATH for easy access:")
+                        codeBlock("ln -sf \"\(cliPath)\" /usr/local/bin/maclotus")
+                        Text("After symlinking, you can use `maclotus` directly.")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
                     }
 
                     Divider()
@@ -36,22 +36,22 @@ xcodebuild -scheme lotuslamp-cli -configuration Release \\
                     section("Usage") {
                         Group {
                             label("Turn on")
-                            codeBlock("lotuslamp on")
+                            codeBlock("\(cliPath) on")
 
                             label("Turn off")
-                            codeBlock("lotuslamp off")
+                            codeBlock("\(cliPath) off")
 
                             label("Set color by name")
-                            codeBlock("lotuslamp color red")
+                            codeBlock("\(cliPath) color red")
 
                             label("Set color by hex")
-                            codeBlock("lotuslamp color FF8800")
+                            codeBlock("\(cliPath) color FF8800")
 
                             label("List preset colors")
-                            codeBlock("lotuslamp colors")
+                            codeBlock("\(cliPath) colors")
 
                             label("Connect to a specific device")
-                            codeBlock("lotuslamp on --device \"My Lamp\"")
+                            codeBlock("\(cliPath) on --device \"My Lamp\"")
                         }
                     }
 
@@ -68,7 +68,7 @@ xcodebuild -scheme lotuslamp-cli -configuration Release \\
                 .padding()
             }
         }
-        .frame(width: 420, height: 480)
+        .frame(width: 480, height: 520)
     }
 
     @ViewBuilder
@@ -90,12 +90,27 @@ xcodebuild -scheme lotuslamp-cli -configuration Release \\
 
     @ViewBuilder
     private func codeBlock(_ code: String) -> some View {
-        Text(code)
-            .font(.system(.caption, design: .monospaced))
-            .padding(8)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Color(nsColor: .controlBackgroundColor))
-            .cornerRadius(6)
+        HStack(alignment: .top, spacing: 0) {
+            Text(code)
+                .font(.system(.caption, design: .monospaced))
+                .padding(8)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .fixedSize(horizontal: false, vertical: true)
+
+            Button {
+                NSPasteboard.general.clearContents()
+                NSPasteboard.general.setString(code, forType: .string)
+            } label: {
+                Image(systemName: "doc.on.doc")
+                    .font(.caption)
+                    .padding(8)
+            }
+            .buttonStyle(.plain)
+            .foregroundStyle(.secondary)
+            .help("Copy to clipboard")
+        }
+        .background(Color(nsColor: .controlBackgroundColor))
+        .cornerRadius(6)
     }
 
     @ViewBuilder

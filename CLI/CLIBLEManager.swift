@@ -1,6 +1,48 @@
 import CoreBluetooth
 import Foundation
 
+// MARK: - ProcessLock
+
+private enum ProcessLock {
+    /// Acquire the PID file lock, killing any previous holder.
+    static func acquire() {
+        let url = BLEConstants.pidFileURL
+        let myPID = ProcessInfo.processInfo.processIdentifier
+
+        if let existing = try? String(contentsOf: url, encoding: .utf8).trimmingCharacters(in: .whitespacesAndNewlines),
+           let oldPID = Int32(existing), oldPID != myPID {
+            if kill(oldPID, 0) == 0 {
+                fputs("[lock] killing previous CLI instance (pid \(oldPID))...\n", stderr)
+                kill(oldPID, SIGTERM)
+                // Wait up to 2s for it to exit
+                var waited = 0
+                while kill(oldPID, 0) == 0 && waited < 20 {
+                    usleep(100_000) // 100ms
+                    waited += 1
+                }
+                if kill(oldPID, 0) == 0 {
+                    fputs("[lock] SIGTERM timed out, sending SIGKILL to \(oldPID)\n", stderr)
+                    kill(oldPID, SIGKILL)
+                }
+            }
+        }
+
+        try? "\(myPID)".write(to: url, atomically: true, encoding: .utf8)
+    }
+
+    /// Release the lock if we still own it.
+    static func release() {
+        let url = BLEConstants.pidFileURL
+        let myPID = ProcessInfo.processInfo.processIdentifier
+        if let stored = try? String(contentsOf: url, encoding: .utf8).trimmingCharacters(in: .whitespacesAndNewlines),
+           stored == "\(myPID)" {
+            try? FileManager.default.removeItem(at: url)
+        }
+    }
+}
+
+// MARK: - CLIBLEManager
+
 /// Synchronous BLE manager for CLI use. Connects, sends a command, then exits.
 final class CLIBLEManager: NSObject {
     private let deviceName: String?
@@ -12,6 +54,13 @@ final class CLIBLEManager: NSObject {
     private var writeType: CBCharacteristicWriteType = .withoutResponse
     private var commandSent = false
 
+    // Breathe mode state
+    private var breatheMode = false
+    private var breatheColor: Data?
+    private var breatheCycleDuration: Double = 4.0
+    private var breatheTimer: Timer?
+    private var breatheStartTime: Date?
+
     init(deviceName: String?) {
         self.deviceName = deviceName
         super.init()
@@ -19,6 +68,7 @@ final class CLIBLEManager: NSObject {
 
     /// Connect to the lamp, send the command, and block until done (or timeout).
     func execute(command: Data) {
+        ProcessLock.acquire()
         fputs("[BLE] execute() called\n", stderr)
         self.command = command
         central = CBCentralManager(delegate: self, queue: .main)
@@ -28,11 +78,40 @@ final class CLIBLEManager: NSObject {
         DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
             if !self.commandSent {
                 fputs("Error: timed out waiting for lamp connection.\n", stderr)
+                ProcessLock.release()
                 CFRunLoopStop(CFRunLoopGetMain())
             }
         }
 
         CFRunLoopRun()
+    }
+
+    /// Connect to the lamp and run a breathe animation until Ctrl+C.
+    func executeBreathe(color: Data?, cycleDuration: Double) {
+        ProcessLock.acquire()
+        fputs("[BLE] executeBreathe() called\n", stderr)
+        breatheMode = true
+        breatheColor = color
+        breatheCycleDuration = cycleDuration
+        central = CBCentralManager(delegate: self, queue: .main)
+
+        // Install SIGINT and SIGTERM handlers to stop cleanly
+        signal(SIGINT) { _ in
+            fputs("\n[BLE] interrupted, stopping breathe\n", stderr)
+            ProcessLock.release()
+            CFRunLoopStop(CFRunLoopGetMain())
+        }
+        signal(SIGTERM) { _ in
+            fputs("\n[BLE] terminated, stopping breathe\n", stderr)
+            ProcessLock.release()
+            CFRunLoopStop(CFRunLoopGetMain())
+        }
+
+        fputs("Breathe running (Ctrl+C to stop)...\n", stderr)
+        CFRunLoopRun()
+
+        breatheTimer?.invalidate()
+        ProcessLock.release()
     }
 
     // MARK: - Characteristic selection (mirrors BLEManager.swift)
@@ -75,6 +154,7 @@ final class CLIBLEManager: NSObject {
 
     private func finish() {
         commandSent = true
+        ProcessLock.release()
         CFRunLoopStop(CFRunLoopGetMain())
     }
 
@@ -195,13 +275,36 @@ extension CLIBLEManager: CBPeripheralDelegate {
 
         fputs("[BLE] sending init packet...\n", stderr)
         sendCommand(LampCommand.initialize)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
-            guard let self, let cmd = self.command else { return }
-            fputs("[BLE] sending command...\n", stderr)
-            self.sendCommand(cmd)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                fputs("[BLE] done\n", stderr)
-                self.finish()
+
+        if breatheMode {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
+                guard let self else { return }
+                if let colorCmd = self.breatheColor {
+                    fputs("[BLE] setting color...\n", stderr)
+                    self.sendCommand(colorCmd)
+                }
+                fputs("[BLE] starting breathe timer\n", stderr)
+                self.breatheStartTime = Date()
+                let cycleDuration = self.breatheCycleDuration
+                self.breatheTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
+                    guard let self, let startTime = self.breatheStartTime else { return }
+                    let elapsed = Date().timeIntervalSince(startTime)
+                    let phase = (elapsed / cycleDuration) * 2 * Double.pi
+                    let normalized = (sin(phase - Double.pi / 2) + 1) / 2
+                    let brightnessValue = 10 + Int(normalized * 90)
+                    fputs("[breathe] brightness: \(brightnessValue)%\n", stderr)
+                    self.sendCommand(LampCommand.setBrightness(brightnessValue))
+                }
+            }
+        } else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
+                guard let self, let cmd = self.command else { return }
+                fputs("[BLE] sending command...\n", stderr)
+                self.sendCommand(cmd)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    fputs("[BLE] done\n", stderr)
+                    self.finish()
+                }
             }
         }
     }

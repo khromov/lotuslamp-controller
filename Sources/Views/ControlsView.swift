@@ -18,6 +18,8 @@ struct ControlsView: View {
             effectsSection
             Divider()
             speedSection
+            Divider()
+            breatheSection
         }
     }
 
@@ -142,6 +144,60 @@ struct ControlsView: View {
                         )
                     }
                     .buttonStyle(.plain)
+                }
+            }
+        }
+    }
+
+    // MARK: - Breathe
+
+    private var breatheSection: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            HStack {
+                Text("Breathe")
+                    .font(.headline)
+                Spacer()
+                Button(ble.isBreathing ? "Stop" : "Start") {
+                    if ble.isBreathing {
+                        ble.stopBreathing()
+                    } else {
+                        ble.startBreathing()
+                    }
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(ble.isBreathing ? .orange : .accentColor)
+                .controlSize(.small)
+            }
+            if !ble.isBreathing {
+                HStack {
+                    Text("Color")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Spacer()
+                    if ble.breatheColor != nil {
+                        Button("None") { ble.breatheColor = nil }
+                            .font(.caption)
+                            .buttonStyle(.plain)
+                            .foregroundStyle(.secondary)
+                    }
+                    ColorPicker("", selection: Binding(
+                        get: { ble.breatheColor ?? .white },
+                        set: { ble.breatheColor = $0 }
+                    ), supportsOpacity: false)
+                    .labelsHidden()
+                    .frame(width: 44, height: 22)
+                    .opacity(ble.breatheColor == nil ? 0.4 : 1)
+                }
+                HStack {
+                    Text("Cycle")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Slider(value: $ble.breatheCycleDuration, in: 1...10, step: 0.5)
+                    Text("\(ble.breatheCycleDuration, specifier: "%.1f")s")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .monospacedDigit()
+                        .frame(width: 36, alignment: .trailing)
                 }
             }
         }
