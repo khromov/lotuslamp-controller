@@ -1,6 +1,9 @@
 # MacLotus
 
-macOS status bar app and CLI tool for controlling a BLE LED lightbulb.
+macOS status bar app and CLI tool for controlling a BLE LED lightbulb. Comes with a CLI tool to control the color via Claude Code hooks or similar.
+
+<img width="339" height="448" alt="Screenshot 2026-03-08 at 22 24 38" src="https://github.com/user-attachments/assets/ea92ca0b-cfba-411b-9056-a00313e28eba" />
+
 
 ## Features
 
