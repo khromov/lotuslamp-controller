@@ -7,13 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F26D64454B97F6D2A04FB1C /* CLIBLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B53E2CE3F910988D1F15345 /* CLIBLEManager.swift */; };
+		0F2A0274CE33AF0FE4D4BB5B /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFB84012268D7878DC1D437 /* main.swift */; };
+		1AE60B2A279FEED37CCFA04B /* BLEConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B03CAAA7C8651555E94DFD83 /* BLEConstants.swift */; };
 		22F2CDB6C4ED7F3C0512C73C /* LotusLampApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C64B2ACB425D2F4A359EA3F /* LotusLampApp.swift */; };
+		2634AA01AA9B465086A6FA5B /* CLIHelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD68C6DF44DE7D4DC29F7CB /* CLIHelpView.swift */; };
 		2724638BF75ADB7D4CFA8EA8 /* ControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2129EC194C4B58E26CBB8F00 /* ControlsView.swift */; };
 		2947780D5F6EC3933B08F470 /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEA963AD0419E7D6C80506F /* BLEManager.swift */; };
+		2CE0E0596E24517A7ED85357 /* LampCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C188CA9218A7FC21732711 /* LampCommand.swift */; };
+		3CCBDABFB76F79892D14D453 /* PresetColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96AA067912B11B1123EAA161 /* PresetColor.swift */; };
 		4865BD76B8F3DE835EE49A05 /* ConnectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3D992B9A18556C4E707202 /* ConnectionView.swift */; };
+		4A82B27CAEB6C04B2A37458A /* EffectMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425AAE2F274C8D0BC5B8A6F3 /* EffectMode.swift */; };
 		6A2AF4CF1D2ADA6AF34F1E2F /* EffectMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425AAE2F274C8D0BC5B8A6F3 /* EffectMode.swift */; };
 		7BF152479B3DF5A86CEB64BE /* BLEConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B03CAAA7C8651555E94DFD83 /* BLEConstants.swift */; };
 		802ED8A10C1E6D831455D1FF /* MainPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23986299D1A0EC364134C99D /* MainPopoverView.swift */; };
+		C09B9EFB4609A070A9BF3C6C /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 7AD689134FAA4B5C57FFC2DD /* ArgumentParser */; };
 		DDEDE08423C297D1A625D4A7 /* LampCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C188CA9218A7FC21732711 /* LampCommand.swift */; };
 		E1EBA8C93C8274FC57AB9A3B /* PresetColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96AA067912B11B1123EAA161 /* PresetColor.swift */; };
 		EF8CC7188CC23AEE638F3091 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFDAB9CF744194939A375B08 /* AppDelegate.swift */; };
@@ -23,20 +31,36 @@
 		2129EC194C4B58E26CBB8F00 /* ControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlsView.swift; sourceTree = "<group>"; };
 		23986299D1A0EC364134C99D /* MainPopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPopoverView.swift; sourceTree = "<group>"; };
 		273FC3B5F77DFB69D82BF8D2 /* LotusLamp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LotusLamp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B53E2CE3F910988D1F15345 /* CLIBLEManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLIBLEManager.swift; sourceTree = "<group>"; };
 		3C64B2ACB425D2F4A359EA3F /* LotusLampApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LotusLampApp.swift; sourceTree = "<group>"; };
 		425AAE2F274C8D0BC5B8A6F3 /* EffectMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectMode.swift; sourceTree = "<group>"; };
 		47C188CA9218A7FC21732711 /* LampCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LampCommand.swift; sourceTree = "<group>"; };
+		7DFB84012268D7878DC1D437 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		8D3D992B9A18556C4E707202 /* ConnectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionView.swift; sourceTree = "<group>"; };
 		96AA067912B11B1123EAA161 /* PresetColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetColor.swift; sourceTree = "<group>"; };
 		B03CAAA7C8651555E94DFD83 /* BLEConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEConstants.swift; sourceTree = "<group>"; };
+		C705130D7DD2619132441008 /* lotuslamp-cli */ = {isa = PBXFileReference; includeInIndex = 0; path = "lotuslamp-cli"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CFD68C6DF44DE7D4DC29F7CB /* CLIHelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLIHelpView.swift; sourceTree = "<group>"; };
 		DFDAB9CF744194939A375B08 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EBEA963AD0419E7D6C80506F /* BLEManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DA0E4CB6BB7E6548431E3722 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C09B9EFB4609A070A9BF3C6C /* ArgumentParser in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		0C5B765033D5BD2F548F91C5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				C705130D7DD2619132441008 /* lotuslamp-cli */,
 				273FC3B5F77DFB69D82BF8D2 /* LotusLamp.app */,
 			);
 			name = Products;
@@ -45,6 +69,7 @@
 		A1EADE847823A16E4DDF9DB6 = {
 			isa = PBXGroup;
 			children = (
+				F6EC1E3F14243E4867283C52 /* CLI */,
 				E9FF595B7682D6CA218F702C /* LotusLamp */,
 				0C5B765033D5BD2F548F91C5 /* Products */,
 			);
@@ -53,6 +78,7 @@
 		D5B865F45EC1F9010382FF6B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				CFD68C6DF44DE7D4DC29F7CB /* CLIHelpView.swift */,
 				8D3D992B9A18556C4E707202 /* ConnectionView.swift */,
 				2129EC194C4B58E26CBB8F00 /* ControlsView.swift */,
 				23986299D1A0EC364134C99D /* MainPopoverView.swift */,
@@ -75,9 +101,37 @@
 			path = LotusLamp;
 			sourceTree = "<group>";
 		};
+		F6EC1E3F14243E4867283C52 /* CLI */ = {
+			isa = PBXGroup;
+			children = (
+				3B53E2CE3F910988D1F15345 /* CLIBLEManager.swift */,
+				7DFB84012268D7878DC1D437 /* main.swift */,
+			);
+			path = CLI;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		31F50008DC2DC45F99319802 /* lotuslamp-cli */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1E1BA3BEFF43CEA519A7F80B /* Build configuration list for PBXNativeTarget "lotuslamp-cli" */;
+			buildPhases = (
+				2A7399847D4C0D8DCCEDE059 /* Sources */,
+				DA0E4CB6BB7E6548431E3722 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "lotuslamp-cli";
+			packageProductDependencies = (
+				7AD689134FAA4B5C57FFC2DD /* ArgumentParser */,
+			);
+			productName = "lotuslamp-cli";
+			productReference = C705130D7DD2619132441008 /* lotuslamp-cli */;
+			productType = "com.apple.product-type.tool";
+		};
 		840407E483B350A90C2D15F9 /* LotusLamp */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B16280BE851598BC7E2C5554 /* Build configuration list for PBXNativeTarget "LotusLamp" */;
@@ -115,17 +169,34 @@
 			);
 			mainGroup = A1EADE847823A16E4DDF9DB6;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				7C4F52B071B4AAFD7D8070CB /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 0C5B765033D5BD2F548F91C5 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				840407E483B350A90C2D15F9 /* LotusLamp */,
+				31F50008DC2DC45F99319802 /* lotuslamp-cli */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		2A7399847D4C0D8DCCEDE059 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1AE60B2A279FEED37CCFA04B /* BLEConstants.swift in Sources */,
+				0F26D64454B97F6D2A04FB1C /* CLIBLEManager.swift in Sources */,
+				4A82B27CAEB6C04B2A37458A /* EffectMode.swift in Sources */,
+				2CE0E0596E24517A7ED85357 /* LampCommand.swift in Sources */,
+				3CCBDABFB76F79892D14D453 /* PresetColor.swift in Sources */,
+				0F2A0274CE33AF0FE4D4BB5B /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CAF48408708E688791EE97F9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -133,6 +204,7 @@
 				EF8CC7188CC23AEE638F3091 /* AppDelegate.swift in Sources */,
 				7BF152479B3DF5A86CEB64BE /* BLEConstants.swift in Sources */,
 				2947780D5F6EC3933B08F470 /* BLEManager.swift in Sources */,
+				2634AA01AA9B465086A6FA5B /* CLIHelpView.swift in Sources */,
 				4865BD76B8F3DE835EE49A05 /* ConnectionView.swift in Sources */,
 				2724638BF75ADB7D4CFA8EA8 /* ControlsView.swift in Sources */,
 				6A2AF4CF1D2ADA6AF34F1E2F /* EffectMode.swift in Sources */,
@@ -235,7 +307,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -244,6 +316,40 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.9;
+			};
+			name = Debug;
+		};
+		75B92DBD6DA3BF8F1C9D0C7F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGNING_REQUIRED = NO;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.lotuslamp.cli;
+				PRODUCT_NAME = lotuslamp;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		BB9EA27288FFF7F0111D06FE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGNING_REQUIRED = NO;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.lotuslamp.cli;
+				PRODUCT_NAME = lotuslamp;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -292,7 +398,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -306,6 +412,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1E1BA3BEFF43CEA519A7F80B /* Build configuration list for PBXNativeTarget "lotuslamp-cli" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BB9EA27288FFF7F0111D06FE /* Debug */,
+				75B92DBD6DA3BF8F1C9D0C7F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 		2953DE2B248C4C9B8570C53B /* Build configuration list for PBXProject "LotusLamp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -325,6 +440,25 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		7C4F52B071B4AAFD7D8070CB /* XCRemoteSwiftPackageReference "swift-argument-parser" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-argument-parser";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7AD689134FAA4B5C57FFC2DD /* ArgumentParser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7C4F52B071B4AAFD7D8070CB /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
+			productName = ArgumentParser;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EBFBCB47E992C6BDB70F6703 /* Project object */;
 }

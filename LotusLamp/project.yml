@@ -2,14 +2,19 @@ name: LotusLamp
 options:
   bundleIdPrefix: com.lotuslamp
   deploymentTarget:
-    macOS: "12.0"
+    macOS: "13.0"
   xcodeVersion: "15"
   createIntermediateGroups: true
+
+packages:
+  ArgumentParser:
+    url: https://github.com/apple/swift-argument-parser
+    from: "1.3.0"
 
 settings:
   base:
     SWIFT_VERSION: "5.9"
-    MACOSX_DEPLOYMENT_TARGET: "12.0"
+    MACOSX_DEPLOYMENT_TARGET: "13.0"
 
 targets:
   LotusLamp:
@@ -25,6 +30,26 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.lotuslamp.controller
         INFOPLIST_FILE: LotusLamp/Resources/Info.plist
         CODE_SIGN_ENTITLEMENTS: LotusLamp/Resources/LotusLamp.entitlements
+        CODE_SIGN_IDENTITY: "-"
+        CODE_SIGNING_REQUIRED: "NO"
+        ENABLE_HARDENED_RUNTIME: "NO"
+
+  lotuslamp-cli:
+    type: tool
+    platform: macOS
+    sources:
+      - path: CLI
+      - path: LotusLamp/LampCommand.swift
+      - path: LotusLamp/BLEConstants.swift
+      - path: LotusLamp/PresetColor.swift
+      - path: LotusLamp/EffectMode.swift
+    dependencies:
+      - package: ArgumentParser
+        product: ArgumentParser
+    settings:
+      base:
+        PRODUCT_NAME: lotuslamp
+        PRODUCT_BUNDLE_IDENTIFIER: com.lotuslamp.cli
         CODE_SIGN_IDENTITY: "-"
         CODE_SIGNING_REQUIRED: "NO"
         ENABLE_HARDENED_RUNTIME: "NO"

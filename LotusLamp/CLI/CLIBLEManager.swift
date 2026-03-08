@@ -1,0 +1,193 @@
+import CoreBluetooth
+import Foundation
+
+/// Synchronous BLE manager for CLI use. Connects, sends a command, then exits.
+final class CLIBLEManager: NSObject {
+    private let deviceName: String?
+    private var command: Data?
+
+    private var central: CBCentralManager!
+    private var peripheral: CBPeripheral?
+    private var writeCharacteristic: CBCharacteristic?
+    private var writeType: CBCharacteristicWriteType = .withoutResponse
+    private var commandSent = false
+
+    init(deviceName: String?) {
+        self.deviceName = deviceName
+        super.init()
+    }
+
+    /// Connect to the lamp, send the command, and block until done (or timeout).
+    func execute(command: Data) {
+        self.command = command
+        central = CBCentralManager(delegate: self, queue: .main)
+
+        // 10-second timeout
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+            if !self.commandSent {
+                fputs("Error: timed out waiting for lamp connection.\n", stderr)
+                CFRunLoopStop(CFRunLoopGetMain())
+            }
+        }
+
+        CFRunLoopRun()
+    }
+
+    // MARK: - Characteristic selection (mirrors BLEManager.swift)
+
+    private func selectCharacteristic(from peripheral: CBPeripheral) -> (CBCharacteristic, CBCharacteristicWriteType)? {
+        guard let services = peripheral.services else { return nil }
+
+        var candidates: [CBCharacteristic] = []
+        for service in services {
+            let uuidLower = service.uuid.uuidString.lowercased()
+            let isStandard = BLEConstants.standardServicePrefixes.contains(where: { uuidLower.hasPrefix($0) })
+            if isStandard { continue }
+
+            guard let characteristics = service.characteristics else { continue }
+            for char in characteristics {
+                let props = char.properties
+                if props.contains(.write) || props.contains(.writeWithoutResponse) {
+                    candidates.append(char)
+                }
+            }
+        }
+
+        guard !candidates.isEmpty else { return nil }
+
+        let preferred = candidates.first(where: { char in
+            let uuidLower = char.uuid.uuidString.lowercased()
+            return BLEConstants.preferredUUIDSubstrings.contains(where: { uuidLower.contains($0) })
+        }) ?? candidates.first!
+
+        let type: CBCharacteristicWriteType = preferred.properties.contains(.writeWithoutResponse)
+            ? .withoutResponse : .withResponse
+
+        return (preferred, type)
+    }
+
+    private func sendCommand(_ data: Data) {
+        guard let char = writeCharacteristic, let p = peripheral else { return }
+        p.writeValue(data, for: char, type: writeType)
+    }
+
+    private func finish() {
+        commandSent = true
+        CFRunLoopStop(CFRunLoopGetMain())
+    }
+}
+
+// MARK: - CBCentralManagerDelegate
+
+extension CLIBLEManager: CBCentralManagerDelegate {
+    func centralManagerDidUpdateState(_ central: CBCentralManager) {
+        guard central.state == .poweredOn else {
+            fputs("Error: Bluetooth is not available (state: \(central.state.rawValue)).\n", stderr)
+            CFRunLoopStop(CFRunLoopGetMain())
+            return
+        }
+
+        if let name = deviceName {
+            // Scan for a named peripheral
+            central.scanForPeripherals(withServices: nil, options: [
+                CBCentralManagerScanOptionAllowDuplicatesKey: false
+            ])
+            _ = name // used in didDiscover
+        } else {
+            // Auto-connect via saved UUID from GUI app's UserDefaults domain
+            let defaults = UserDefaults(suiteName: "com.lotuslamp.controller")
+            if let uuidString = defaults?.string(forKey: BLEConstants.lastPeripheralUUIDKey),
+               let uuid = UUID(uuidString: uuidString) {
+                let known = central.retrievePeripherals(withIdentifiers: [uuid])
+                if let p = known.first {
+                    peripheral = p
+                    p.delegate = self
+                    central.connect(p, options: nil)
+                    return
+                }
+            }
+            // No saved UUID — scan
+            central.scanForPeripherals(withServices: nil, options: [
+                CBCentralManagerScanOptionAllowDuplicatesKey: false
+            ])
+        }
+    }
+
+    func centralManager(_ central: CBCentralManager,
+                        didDiscover peripheral: CBPeripheral,
+                        advertisementData: [String: Any],
+                        rssi RSSI: NSNumber) {
+        let name = peripheral.name
+            ?? advertisementData[CBAdvertisementDataLocalNameKey] as? String
+            ?? ""
+
+        let match: Bool
+        if let target = deviceName {
+            match = name.lowercased() == target.lowercased()
+        } else {
+            // No target name and we got here via scan — connect to first advertising device
+            // (shouldn't normally happen; saved UUID path handles auto-connect)
+            match = !name.isEmpty
+        }
+
+        guard match else { return }
+
+        central.stopScan()
+        self.peripheral = peripheral
+        peripheral.delegate = self
+        central.connect(peripheral, options: nil)
+    }
+
+    func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
+        peripheral.discoverServices(nil)
+    }
+
+    func centralManager(_ central: CBCentralManager,
+                        didFailToConnect peripheral: CBPeripheral,
+                        error: Error?) {
+        fputs("Error: failed to connect: \(error?.localizedDescription ?? "unknown")\n", stderr)
+        CFRunLoopStop(CFRunLoopGetMain())
+    }
+}
+
+// MARK: - CBPeripheralDelegate
+
+extension CLIBLEManager: CBPeripheralDelegate {
+    func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
+        guard error == nil, let services = peripheral.services else {
+            fputs("Error: service discovery failed.\n", stderr)
+            CFRunLoopStop(CFRunLoopGetMain())
+            return
+        }
+        for service in services {
+            peripheral.discoverCharacteristics(nil, for: service)
+        }
+    }
+
+    func peripheral(_ peripheral: CBPeripheral,
+                    didDiscoverCharacteristicsFor service: CBService,
+                    error: Error?) {
+        guard let services = peripheral.services else { return }
+        let allDone = services.allSatisfy { $0.characteristics != nil }
+        guard allDone else { return }
+
+        guard let (char, type) = selectCharacteristic(from: peripheral) else {
+            fputs("Error: no writable characteristic found.\n", stderr)
+            CFRunLoopStop(CFRunLoopGetMain())
+            return
+        }
+
+        writeCharacteristic = char
+        writeType = type
+
+        // Send init packet, then the actual command
+        sendCommand(LampCommand.initialize)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
+            guard let self, let cmd = self.command else { return }
+            self.sendCommand(cmd)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                self.finish()
+            }
+        }
+    }
+}
