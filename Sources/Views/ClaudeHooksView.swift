@@ -166,7 +166,7 @@ struct ClaudeHooksView: View {
         let cli = cliPath
         return [
             "SessionStart": [
-                ["hooks": [["type": "command", "command": "\(cli) color yellow"]]]
+                ["hooks": [["type": "command", "command": "\(cli) on"], ["type": "command", "command": "\(cli) color yellow"]]]
             ],
             "UserPromptSubmit": [
                 ["hooks": [["type": "command", "command": "\(cli) color green"]]]
